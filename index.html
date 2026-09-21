@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f4ef">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Scheda palestra</title>
+<style>
+:root{
+  --bg:#f7f4ef; --surface:#fffdfa; --surface-2:#f1ece4; --ink:#1c1a17; --ink-2:#6b645b;
+  --line:#e0d9ce; --accent:#c2410c; --accent-soft:#fdeee5; --teal:#0f766e; --teal-soft:#e4f3f1;
+  --warn:#b45309; --warn-soft:#fef3c7; --fig:#2b2723; --eq:#a9a096; --radius:16px;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14120f; --surface:#1d1a16; --surface-2:#262119; --ink:#f4efe7; --ink-2:#a79e91;
+    --line:#39332b; --accent:#fb923c; --accent-soft:#3a2314; --teal:#2dd4bf; --teal-soft:#10312e;
+    --warn:#fbbf24; --warn-soft:#3a2d10; --fig:#efe9e0; --eq:#7a7166;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:120px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:940px;margin:0 auto;padding:18px 14px 80px}
+
+/* ---------- topbar ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:940px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.days{display:flex;gap:4px;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:3px;flex:none;overflow-x:auto}
+.days button{font:600 12.5px/1 var(--sans);border:0;background:transparent;color:var(--ink-2);padding:8px 12px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.days button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.date-field{display:flex;align-items:center;gap:7px;margin-left:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:5px 9px}
+.date-field label{font:600 10px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.date-field input{border:0;background:transparent;color:var(--ink);font:600 13.5px/1 var(--sans);padding:2px 0;min-width:110px}
+.date-field input:focus{outline:none}
+.status{font-size:11px;color:var(--ink-2);white-space:nowrap}
+.status.ok{color:var(--teal)}
+
+.banner{background:var(--warn-soft);color:var(--warn);font-size:12.5px;padding:9px 14px;text-align:center;font-weight:600;display:none}
+.banner.on{display:block}
+
+/* ---------- header ---------- */
+header{margin:18px 0 22px}
+.kicker{font:600 10.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+h1{font-weight:700;font-size:clamp(25px,6.2vw,36px);line-height:1.08;margin:0 0 9px;letter-spacing:-.02em}
+h1 span{color:var(--ink-2);font-weight:600}
+.sub{color:var(--ink-2);max-width:62ch;margin:0;font-size:13.5px}
+.legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+.tag{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:500;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.dot.a{background:var(--accent)} .dot.b{background:var(--teal)}
+
+/* ---------- sections ---------- */
+section{margin-top:28px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:11px;padding-bottom:7px;border-bottom:2px solid var(--ink)}
+.sec-head h2{font-weight:700;font-size:17px;margin:0;letter-spacing:.03em;text-transform:uppercase}
+.sec-head .meta{font-size:12px;color:var(--ink-2);margin-left:auto;white-space:nowrap}
+
+/* ---------- card ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:13px}
+.card-head{display:flex;align-items:center;gap:10px;padding:11px 13px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.num{font-weight:700;font-size:12.5px;width:26px;height:26px;flex:none;border-radius:8px;background:var(--accent);color:#fff;display:grid;place-items:center}
+.card-head h3{font-size:14px;font-weight:600;margin:0;flex:1;min-width:0;letter-spacing:-.01em}
+.chips{display:flex;gap:6px;flex:none}
+.chip{font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;background:var(--surface);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.chip.ss{color:#fff;background:var(--ink);border-color:var(--ink);letter-spacing:.07em;text-transform:uppercase;font-size:10px}
+
+.panels{display:grid;grid-template-columns:1fr 1fr}
+.panel{padding:14px 13px 16px;min-width:0}
+.panel + .panel{border-left:1px dashed var(--line)}
+.p-label{font:700 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;display:inline-block;padding:4px 8px;border-radius:5px;margin-bottom:10px}
+.pri .p-label{background:var(--accent-soft);color:var(--accent)}
+.alt .p-label{background:var(--teal-soft);color:var(--teal)}
+.figbox{width:100%;max-width:195px;margin:0 auto 10px;aspect-ratio:1/1;border-radius:12px;background:radial-gradient(circle at 50% 42%, rgba(128,120,110,.10), transparent 68%);display:grid;place-items:center}
+.figbox svg{width:100%;height:100%;display:block}
+.p-name{font-weight:600;font-size:13.5px;margin:0 0 5px;line-height:1.3}
+.p-note{font-size:12.5px;color:var(--ink-2);margin:0}
+.p-note b{color:var(--ink);font-weight:600}
+.planb{font-size:11.5px;color:var(--ink-2);margin:8px 0 0;padding-top:8px;border-top:1px solid var(--line)}
+
+/* ---------- log ---------- */
+.log{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:10px 13px;background:var(--surface-2);border-top:1px solid var(--line)}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:2px;flex:none}
+.seg button{font:600 11.5px/1 var(--sans);border:0;background:transparent;color:var(--ink-2);padding:7px 10px;border-radius:7px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.seg button[data-v="a"][aria-pressed="true"]{background:var(--teal)}
+.w-field{display:inline-flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:5px 10px;flex:none}
+.w-field input{width:58px;border:0;background:transparent;color:var(--ink);font:700 16px/1.2 var(--sans);padding:3px 0;text-align:right}
+.w-field input:focus{outline:none}
+.w-field input::-webkit-outer-spin-button,.w-field input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.w-field input[type=number]{-moz-appearance:textfield}
+.w-field span{font:600 11px/1 var(--sans);color:var(--ink-2)}
+.w-field.filled{border-color:var(--accent)}
+.last{font-size:11.5px;color:var(--ink-2);margin-left:auto;text-align:right;line-height:1.35}
+.last b{color:var(--ink);font-weight:700}
+.vtag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:1px 5px;border-radius:4px;background:var(--accent-soft);color:var(--accent);margin-left:4px}
+.vtag.a{background:var(--teal-soft);color:var(--teal)}
+
+.ss-tag{display:flex;align-items:center;gap:8px;padding:9px 13px;background:rgba(128,120,110,.08);font-size:12px;font-weight:600;color:var(--ink-2)}
+.ss-tag em{font-style:normal;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:2px 6px;font-size:11px;font-weight:700}
+.ss-link{text-align:center;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding:6px;background:var(--accent-soft)}
+.ss-row + .ss-row{border-top:1px solid var(--line)}
+
+/* ---------- SVG ---------- */
+svg .b{fill:none;stroke:var(--fig);stroke-width:4.6;stroke-linecap:round;stroke-linejoin:round}
+svg .h{fill:var(--fig);stroke:none}
+svg .eq{fill:none;stroke:var(--eq);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+svg .eqf{fill:var(--eq);stroke:none}
+svg .cbl{fill:none;stroke:var(--eq);stroke-width:2.2;stroke-linecap:round;opacity:.85}
+svg .arw{fill:none;stroke-width:3;stroke-linecap:round}
+.pri svg .arw{stroke:var(--accent);marker-end:url(#arwA)}
+.alt svg .arw{stroke:var(--teal);marker-end:url(#arwB)}
+#markers{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ---------- blocchi ---------- */
+.block{margin-top:24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.block h2{font-size:15.5px;margin:0 0 11px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.block h2 .cnt{font:600 11px/1 var(--sans);color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:4px 7px}
+textarea{width:100%;min-height:60px;resize:vertical;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink);font:400 13.5px/1.5 var(--sans);padding:10px 12px}
+textarea:focus{outline:none;border-color:var(--accent)}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{padding:8px 9px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:700 10px/1.2 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);vertical-align:bottom}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--surface);font-weight:700}
+tbody tr.cur td,tbody tr.cur td:first-child{background:var(--accent-soft)}
+td .v{font-weight:700;font-size:13.5px}
+td .m{font-size:9.5px;color:var(--teal);font-weight:700}
+.empty{color:var(--ink-2);font-size:13px;margin:4px 0 0}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px;align-items:center}
+.btn{font:600 12px/1 var(--sans);color:var(--ink-2);background:transparent;border:1px solid var(--line);border-radius:9px;padding:10px 13px;cursor:pointer}
+.btn:active{transform:translateY(1px)}
+.btn.primary{color:var(--accent);border-color:var(--accent)}
+.btn.danger{color:var(--ink-2)}
+.btn.danger:active{color:#dc2626;border-color:#dc2626}
+.hint{font-size:11.5px;color:var(--ink-2)}
+.notes ul{margin:0;padding-left:18px}
+.notes li{margin-bottom:7px;font-size:13.5px;color:var(--ink-2)}
+.notes li b{color:var(--ink);font-weight:600}
+.howto ol{margin:0;padding-left:18px}
+.howto li{margin-bottom:6px;font-size:13px;color:var(--ink-2)}
+.howto b{color:var(--ink)}
+footer{text-align:center;font-size:11px;color:var(--ink-2);margin-top:26px}
+
+@media (max-width:640px){
+  .panels{grid-template-columns:1fr}
+  .panel + .panel{border-left:none;border-top:1px dashed var(--line)}
+  .figbox{max-width:160px}
+  .chip.rest{display:none}
+  .date-field{width:100%;margin-left:0;justify-content:space-between}
+  .last{margin-left:0;width:100%;text-align:left}
+  .topbar-in{gap:7px}
+}
+</style>
+</head>
+<body>
+
+<svg id="markers" aria-hidden="true"><defs>
+  <marker id="arwA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+  <marker id="arwB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--teal)"/></marker>
+</defs></svg>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="days" id="days"></div>
+    <div class="date-field"><label for="sdate">Data</label><input type="date" id="sdate"></div>
+    <span class="status" id="status">—</span>
+  </div>
+  <div class="banner" id="banner">Salvataggio locale non disponibile su questo browser: usa "Esporta backup" prima di chiudere.</div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="kicker" id="kicker"></div>
+    <h1 id="title"></h1>
+    <p class="sub">Per ogni esercizio trovi l'illustrazione, l'alternativa senza macchinari e il campo peso. La data in alto vale per tutta la seduta; i carichi restano salvati sul telefono e ritrovi l'ultimo valore accanto a ogni esercizio.</p>
+    <div class="legend">
+      <span class="tag"><span class="dot a"></span>Esercizio da scheda</span>
+      <span class="tag"><span class="dot b"></span>Alternativa senza macchinari</span>
+      <span class="tag" id="volume"></span>
+    </div>
+  </header>
+
+  <div id="program"></div>
+
+  <div class="block">
+    <h2>Note della seduta</h2>
+    <textarea id="note" placeholder="Sensazioni, dolori, macchinari occupati, variazioni…"></textarea>
+  </div>
+
+  <div class="block">
+    <h2>Storico <span class="cnt" id="hcount">0 sedute</span></h2>
+    <div class="scroller" id="history"></div>
+    <div class="tools">
+      <button class="btn" id="copyLast">Copia pesi ultima seduta</button>
+      <button class="btn danger" id="delCur">Elimina questa data</button>
+    </div>
+  </div>
+
+  <div class="block">
+    <h2>Backup dei dati</h2>
+    <p class="hint">Lo storage del browser può essere svuotato (pulizia dati, cambio telefono, modalità privata). Esporta ogni tanto: il file JSON si reimporta qui e ripristina tutto.</p>
+    <div class="tools">
+      <button class="btn primary" id="expJson">Esporta backup (JSON)</button>
+      <button class="btn" id="impJson">Importa backup</button>
+      <button class="btn" id="expCsv">Esporta CSV giorno</button>
+      <input type="file" id="fileIn" accept=".json,application/json" hidden>
+    </div>
+  </div>
+
+  <div class="block notes">
+    <h2>Note di esecuzione</h2>
+    <ul>
+      <li><b>Carico per 15 ripetizioni:</b> circa 60-65% del massimale. Le ultime 2-3 devono essere difficili ma pulite: se arrivi a 15 senza fatica, sali di carico alla serie dopo.</li>
+      <li><b>Tempo:</b> 2" in eccentrica, 1" di pausa in contrazione su croci e reverse fly, risalita controllata.</li>
+      <li><b>Passando ai manubri</b> riduci il carico del 10-15% rispetto alla macchina: perdi il vincolo della traiettoria e serve più stabilizzazione.</li>
+      <li><b>Confronto pesi:</b> il carico è confrontabile solo a parità di variante — per questo ogni riga registra se hai usato la versione da scheda o l'alternativa.</li>
+    </ul>
+  </div>
+
+  <div class="block howto">
+    <h2>Tenerla a portata di mano</h2>
+    <ol>
+      <li><b>iPhone:</b> salva il file in File (iCloud Drive), aprilo con Safari e tocca <b>Condividi → Aggiungi ai Preferiti</b>.</li>
+      <li><b>Android:</b> salva il file in Drive o nella memoria del telefono e aprilo con Chrome; aggiungi la pagina ai segnalibri.</li>
+      <li>Apri sempre il file <b>dalla stessa posizione</b>: i dati salvati sono legati a dove si trova il file.</li>
+      <li>Se lo metti su un hosting statico (es. GitHub Pages) puoi usare <b>Aggiungi alla schermata Home</b> e il salvataggio diventa più stabile.</li>
+    </ol>
+  </div>
+
+  <footer>Scheda personale · dati salvati solo su questo dispositivo</footer>
+</div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   1. LIBRERIA DISEGNI  —  chiave: codice SVG
+   ============================================================ */
+var FIGS = {
+cableLowHigh: '<svg viewBox="0 0 180 180" role="img" aria-label="Croci ai cavi dal basso verso l\'alto"><path class="eq" d="M18 168 H42 M30 168 V152"/><circle class="eq" cx="30" cy="146" r="6"/><path class="eq" d="M138 168 H162 M150 168 V152"/><circle class="eq" cx="150" cy="146" r="6"/><path class="cbl" d="M30 140 L72 30"/><path class="cbl" d="M150 140 L108 30"/><circle class="h" cx="90" cy="40" r="11"/><path class="b" d="M90 51 V60"/><path class="b" d="M68 64 H112"/><path class="b" d="M90 60 V112"/><path class="b" d="M74 112 H106"/><path class="b" d="M74 112 L70 140 L68 166"/><path class="b" d="M106 112 L110 140 L112 166"/><path class="b" d="M68 64 L54 48 L72 28"/><path class="b" d="M112 64 L126 48 L108 28"/><path class="arw" d="M38 122 Q42 76 68 56"/></svg>',
+
+inclineFly: '<svg viewBox="0 0 180 180" role="img" aria-label="Croci su panca inclinata con manubri"><path class="eq" d="M38 152 L58 138 L118 76"/><path class="eq" d="M46 148 V168 M112 82 V168"/><circle class="h" cx="126" cy="66" r="10"/><path class="b" d="M116 78 L66 130"/><path class="b" d="M66 130 L44 146 L44 168"/><path class="b" d="M66 130 L52 152 L54 168"/><path class="b" d="M114 80 L98 60 L84 44"/><path class="eq" d="M74 34 L94 54"/><path class="eqf" d="M72 30 l8 -3 6 6 -8 3z"/><path class="eqf" d="M92 50 l8 -3 6 6 -8 3z"/><path class="arw" d="M42 62 Q54 40 74 34"/></svg>',
+
+chestPressMachine: '<svg viewBox="0 0 180 180" role="img" aria-label="Chest press alla macchina"><path class="eq" d="M34 168 H150"/><path class="eq" d="M52 60 V124 M52 124 H98 M52 124 V168 M96 124 V168"/><path class="eq" d="M134 34 V168"/><path class="eq" d="M120 56 V92"/><path class="cbl" d="M120 74 H134"/><circle class="h" cx="60" cy="50" r="10"/><path class="b" d="M62 60 L68 118"/><path class="b" d="M64 74 L92 80 L118 74"/><path class="b" d="M68 118 L100 126 L104 160"/><path class="b" d="M68 118 L96 134 L100 164"/><path class="arw" d="M100 104 H130"/></svg>',
+
+flatDbPress: '<svg viewBox="0 0 180 180" role="img" aria-label="Panca piana con manubri"><path class="eq" d="M36 122 H140"/><path class="eq" d="M50 122 V168 M128 122 V168"/><circle class="h" cx="126" cy="106" r="10"/><path class="b" d="M114 113 L64 115"/><path class="b" d="M64 115 L46 132 L46 168"/><path class="b" d="M64 115 L54 136 L56 168"/><path class="b" d="M112 112 L108 88 L106 64"/><path class="eq" d="M88 62 H126"/><path class="eqf" d="M84 54 h7 v16 h-7z"/><path class="eqf" d="M123 54 h7 v16 h-7z"/><path class="arw" d="M146 96 V66"/></svg>',
+
+pecDeck: '<svg viewBox="0 0 180 180" role="img" aria-label="Pectoral machine a mano aperta"><path class="eq" d="M74 116 H106 M78 116 V168 M102 116 V168"/><path class="eq" d="M36 54 V104 M144 54 V104"/><path class="cbl" d="M36 78 H56 M144 78 H124"/><circle class="h" cx="90" cy="42" r="11"/><path class="b" d="M90 53 V62"/><path class="b" d="M70 66 H110"/><path class="b" d="M90 62 V114"/><path class="b" d="M70 66 L48 62 L38 76"/><path class="b" d="M110 66 L132 62 L142 76"/><path class="b" d="M78 118 L74 146 L70 168"/><path class="b" d="M102 118 L106 146 L110 168"/><path class="arw" d="M26 98 Q46 110 64 102"/><path class="arw" d="M154 98 Q134 110 116 102"/></svg>',
+
+flatFlyTop: '<svg viewBox="0 0 180 180" role="img" aria-label="Croci su panca piana con manubri"><rect class="eq" x="76" y="48" width="28" height="118" rx="6"/><circle class="h" cx="90" cy="38" r="11"/><path class="b" d="M72 62 H108"/><path class="b" d="M90 56 V150"/><path class="b" d="M72 62 L50 56 L32 60"/><path class="b" d="M108 62 L130 56 L148 60"/><path class="eq" d="M32 46 V76"/><path class="eq" d="M148 46 V76"/><path class="eqf" d="M24 44 h16 v7 h-16z"/><path class="eqf" d="M24 71 h16 v7 h-16z"/><path class="eqf" d="M140 44 h16 v7 h-16z"/><path class="eqf" d="M140 71 h16 v7 h-16z"/><path class="b" d="M82 150 L76 168"/><path class="b" d="M98 150 L104 168"/><path class="arw" d="M34 96 Q56 104 72 96"/><path class="arw" d="M146 96 Q124 104 108 96"/></svg>',
+
+highCableRearFly: '<svg viewBox="0 0 180 180" role="img" aria-label="Croci ai cavi alti"><path class="eq" d="M14 12 H40 M27 12 V24"/><circle class="eq" cx="27" cy="30" r="6"/><path class="eq" d="M140 12 H166 M153 12 V24"/><circle class="eq" cx="153" cy="30" r="6"/><path class="cbl" d="M27 36 L33 58"/><path class="cbl" d="M153 36 L147 58"/><circle class="h" cx="90" cy="48" r="11"/><path class="b" d="M90 59 V66"/><path class="b" d="M70 70 H110"/><path class="b" d="M90 66 V116"/><path class="b" d="M75 116 H105"/><path class="b" d="M70 70 L50 64 L33 60"/><path class="b" d="M110 70 L130 64 L147 60"/><path class="b" d="M75 116 L71 142 L69 168"/><path class="b" d="M105 116 L109 142 L111 168"/><path class="arw" d="M64 100 Q48 88 38 74"/><path class="arw" d="M116 100 Q132 88 142 74"/></svg>',
+
+bentOverRearFly: '<svg viewBox="0 0 180 180" role="img" aria-label="Reverse fly a busto flesso con manubri"><circle class="h" cx="46" cy="70" r="10"/><path class="b" d="M58 78 L104 100"/><path class="b" d="M104 100 L110 134 L106 168"/><path class="b" d="M104 100 L120 132 L124 168"/><path class="b" d="M60 80 L64 56 L80 44"/><path class="eq" d="M70 38 H92"/><path class="eqf" d="M66 32 h7 v13 h-7z"/><path class="eqf" d="M89 32 h7 v13 h-7z"/><path class="arw" d="M66 120 Q58 80 74 50"/></svg>',
+
+shoulderPressMachine: '<svg viewBox="0 0 180 180" role="img" aria-label="Shoulder press alla macchina"><path class="eq" d="M34 30 V124 M146 30 V124"/><path class="eq" d="M46 28 H74 M106 28 H134"/><path class="eq" d="M74 122 H106 M78 122 V168 M102 122 V168"/><circle class="h" cx="90" cy="56" r="11"/><path class="b" d="M90 67 V74"/><path class="b" d="M70 78 H110"/><path class="b" d="M90 74 V120"/><path class="b" d="M70 78 L56 58 L60 30"/><path class="b" d="M110 78 L124 58 L120 30"/><path class="b" d="M78 124 L72 148 L70 168"/><path class="b" d="M102 124 L108 148 L110 168"/><path class="arw" d="M22 66 V38"/><path class="arw" d="M158 66 V38"/></svg>',
+
+dbMilitaryPress: '<svg viewBox="0 0 180 180" role="img" aria-label="Military press con manubri"><circle class="h" cx="90" cy="56" r="11"/><path class="b" d="M90 67 V74"/><path class="b" d="M70 78 H110"/><path class="b" d="M90 74 V120"/><path class="b" d="M76 120 H104"/><path class="b" d="M70 78 L56 58 L58 34"/><path class="b" d="M110 78 L124 58 L122 34"/><path class="eq" d="M42 34 H74"/><path class="eq" d="M106 34 H138"/><path class="eqf" d="M38 26 h7 v16 h-7z"/><path class="eqf" d="M71 26 h7 v16 h-7z"/><path class="eqf" d="M102 26 h7 v16 h-7z"/><path class="eqf" d="M135 26 h7 v16 h-7z"/><path class="b" d="M76 120 L72 146 L70 168"/><path class="b" d="M104 120 L108 146 L110 168"/><path class="arw" d="M26 70 V40"/><path class="arw" d="M154 70 V40"/></svg>',
+
+pushdownEz: '<svg viewBox="0 0 180 180" role="img" aria-label="Pushdown con manubrio ondulato"><path class="eq" d="M106 10 H142 M124 10 V24"/><circle class="eq" cx="124" cy="30" r="6"/><path class="cbl" d="M124 36 V104"/><path class="eq" d="M100 110 q7 -8 14 0 q7 8 14 0 q7 -8 14 0"/><circle class="h" cx="74" cy="34" r="10"/><path class="b" d="M76 44 L82 104"/><path class="b" d="M78 56 L86 86 L106 110"/><path class="b" d="M82 104 L74 136 L70 168"/><path class="b" d="M82 104 L90 136 L94 168"/><path class="arw" d="M152 72 V108"/></svg>',
+
+pushdownRope: '<svg viewBox="0 0 180 180" role="img" aria-label="Pushdown alla corda"><path class="eq" d="M106 10 H142 M124 10 V24"/><circle class="eq" cx="124" cy="30" r="6"/><path class="cbl" d="M124 36 V92"/><path class="eq" d="M124 92 L108 122"/><path class="eq" d="M124 92 L142 122"/><path class="eqf" d="M103 120 h11 v9 h-11z"/><path class="eqf" d="M137 120 h11 v9 h-11z"/><circle class="h" cx="74" cy="34" r="10"/><path class="b" d="M76 44 L82 104"/><path class="b" d="M78 56 L86 86 L108 118"/><path class="b" d="M82 104 L74 136 L70 168"/><path class="b" d="M82 104 L90 136 L94 168"/><path class="arw" d="M156 78 V116"/></svg>',
+
+skullCrusher: '<svg viewBox="0 0 180 180" role="img" aria-label="French press con bilanciere EZ"><path class="eq" d="M34 124 H140"/><path class="eq" d="M48 124 V168 M128 124 V168"/><circle class="h" cx="126" cy="108" r="10"/><path class="b" d="M114 115 L64 117"/><path class="b" d="M64 117 L46 134 L46 168"/><path class="b" d="M64 117 L54 138 L56 168"/><path class="b" d="M112 114 L106 86 L128 74"/><path class="eq" d="M116 66 q7 -7 14 0 q7 7 14 0"/><path class="arw" d="M150 98 Q146 76 136 68"/></svg>',
+
+dips: '<svg viewBox="0 0 180 180" role="img" aria-label="Dips alle parallele"><path class="eq" d="M40 86 H74 M106 86 H142"/><path class="eq" d="M54 86 V168 M130 86 V168"/><circle class="h" cx="90" cy="46" r="10"/><path class="b" d="M90 56 L94 106"/><path class="b" d="M86 66 L74 82 L66 86"/><path class="b" d="M94 66 L110 82 L118 86"/><path class="b" d="M94 106 L114 120 L128 108"/><path class="b" d="M94 106 L106 126 L120 118"/><path class="arw" d="M158 92 V126"/></svg>',
+
+sandbagCarry: '<svg viewBox="0 0 180 180" role="img" aria-label="Camminata con sacco sulle spalle"><rect class="eq" x="48" y="28" width="46" height="32" rx="12"/><path class="eq" d="M60 34 V54 M82 34 V54"/><circle class="h" cx="104" cy="42" r="10"/><path class="b" d="M102 52 L96 106"/><path class="b" d="M98 60 L86 52 L72 46"/><path class="b" d="M100 64 L90 58 L76 52"/><path class="b" d="M96 106 L78 132 L72 166"/><path class="b" d="M96 106 L114 130 L126 160"/><path class="b" d="M126 160 H138"/><path class="arw" d="M128 150 H162"/></svg>',
+
+dumbbellCarry: '<svg viewBox="0 0 180 180" role="img" aria-label="Farmer walk con manubri"><circle class="h" cx="90" cy="36" r="11"/><path class="b" d="M90 47 V54"/><path class="b" d="M70 58 H110"/><path class="b" d="M90 54 V106"/><path class="b" d="M76 106 H104"/><path class="b" d="M70 58 L66 82 L64 106"/><path class="b" d="M110 58 L114 82 L116 106"/><path class="eq" d="M46 112 H82"/><path class="eq" d="M98 112 H134"/><path class="eqf" d="M42 104 h7 v17 h-7z"/><path class="eqf" d="M79 104 h7 v17 h-7z"/><path class="eqf" d="M94 104 h7 v17 h-7z"/><path class="eqf" d="M131 104 h7 v17 h-7z"/><path class="b" d="M76 106 L70 138 L66 166"/><path class="b" d="M104 106 L112 138 L116 166"/><path class="arw" d="M132 156 H164"/></svg>',
+
+legPress: '<svg viewBox="0 0 180 180" role="img" aria-label="Pressa orizzontale seduto"><path class="eq" d="M40 66 V128 M40 128 H86"/><path class="eq" d="M44 128 V166 M82 128 V166"/><path class="eq" d="M146 84 V152"/><path class="eq" d="M136 96 V146"/><path class="eq" d="M146 166 H164"/><circle class="h" cx="52" cy="56" r="10"/><path class="b" d="M54 66 L60 122"/><path class="b" d="M56 78 L78 92 L88 106"/><path class="b" d="M60 122 L106 112 L134 122"/><path class="b" d="M60 126 L104 122 L132 132"/><path class="arw" d="M100 154 H134"/></svg>',
+
+gobletSquat: '<svg viewBox="0 0 180 180" role="img" aria-label="Goblet squat con manubrio"><circle class="h" cx="90" cy="34" r="11"/><path class="b" d="M90 45 V52"/><path class="b" d="M70 56 H110"/><path class="b" d="M90 52 V98"/><path class="b" d="M74 98 H106"/><path class="b" d="M70 56 L74 76 L86 80"/><path class="b" d="M110 56 L106 76 L94 80"/><path class="eq" d="M82 66 q8 -8 16 0"/><path class="eqf" d="M78 72 h24 v22 h-24z"/><path class="b" d="M74 98 L60 124 L62 164"/><path class="b" d="M106 98 L120 124 L118 164"/><path class="b" d="M54 164 H70 M110 164 H126"/><path class="arw" d="M34 96 V130"/></svg>',
+
+legCurlMachine: '<svg viewBox="0 0 180 180" role="img" aria-label="Leg curl alla macchina"><path class="eq" d="M32 116 H128"/><path class="eq" d="M44 116 V166 M116 116 V166"/><circle class="eq" cx="144" cy="82" r="9"/><path class="eq" d="M144 91 V116"/><circle class="h" cx="42" cy="102" r="10"/><path class="b" d="M54 108 L104 110"/><path class="b" d="M56 106 L44 92 L34 86"/><path class="b" d="M104 110 L126 112 L140 90"/><path class="b" d="M104 114 L124 116 L136 96"/><path class="arw" d="M162 120 Q158 92 148 82"/></svg>',
+
+slidingLegCurl: '<svg viewBox="0 0 180 180" role="img" aria-label="Leg curl con fitball o slider"><path class="eq" d="M16 164 H164"/><circle class="eq" cx="140" cy="142" r="20"/><circle class="h" cx="38" cy="148" r="10"/><path class="b" d="M50 146 L96 128"/><path class="b" d="M50 150 L34 160"/><path class="b" d="M96 128 L116 116 L134 126"/><path class="b" d="M96 132 L112 120 L130 132"/><path class="arw" d="M166 112 Q146 100 124 110"/></svg>',
+
+reverseFlyMachine: '<svg viewBox="0 0 180 180" role="img" aria-label="Reverse fly alla macchina"><path class="eq" d="M74 116 H106 M78 116 V168 M102 116 V168"/><path class="eq" d="M72 92 H108"/><path class="eq" d="M90 92 V116"/><path class="eq" d="M24 50 V104 M156 50 V104"/><path class="cbl" d="M24 74 H44 M156 74 H136"/><circle class="h" cx="90" cy="42" r="11"/><path class="b" d="M90 53 V62"/><path class="b" d="M70 66 H110"/><path class="b" d="M90 62 V92"/><path class="b" d="M70 66 L48 70 L30 64"/><path class="b" d="M110 66 L132 70 L150 64"/><path class="b" d="M78 118 L74 146 L70 168"/><path class="b" d="M102 118 L106 146 L110 168"/><path class="arw" d="M66 100 Q46 96 30 86"/><path class="arw" d="M114 100 Q134 96 150 86"/></svg>',
+
+jumpSquat: '<svg viewBox="0 0 180 180" role="img" aria-label="Jump squat"><path class="eq" d="M28 166 H152"/><path class="cbl" d="M58 154 H74 M106 154 H122 M82 160 H98"/><circle class="h" cx="90" cy="32" r="11"/><path class="b" d="M90 43 V50"/><path class="b" d="M70 54 H110"/><path class="b" d="M90 50 V92"/><path class="b" d="M74 92 H106"/><path class="b" d="M70 54 L54 46 L42 32"/><path class="b" d="M110 54 L126 46 L138 32"/><path class="b" d="M74 92 L64 118 L74 138"/><path class="b" d="M106 92 L116 118 L106 138"/><path class="arw" d="M158 140 V96"/></svg>',
+
+boxStepUp: '<svg viewBox="0 0 180 180" role="img" aria-label="Step-up esplosivo su panca"><path class="eq" d="M28 166 H152"/><rect class="eq" x="100" y="116" width="52" height="50" rx="4"/><circle class="h" cx="72" cy="44" r="10"/><path class="b" d="M74 54 L80 104"/><path class="b" d="M76 64 L62 84 L56 100"/><path class="b" d="M78 66 L94 82 L102 96"/><path class="b" d="M80 104 L106 106 L112 116"/><path class="b" d="M80 104 L72 134 L64 164"/><path class="arw" d="M162 126 V86"/></svg>',
+
+latPulldown: '<svg viewBox="0 0 180 180" role="img" aria-label="Lat machine"><path class="eq" d="M74 10 H106"/><circle class="eq" cx="90" cy="18" r="6"/><path class="cbl" d="M90 24 V34"/><path class="eq" d="M36 36 H144"/><path class="eq" d="M36 36 L28 26 M144 36 L152 26"/><path class="eq" d="M70 112 H110"/><path class="eq" d="M74 122 H106 M78 122 V166 M102 122 V166"/><circle class="h" cx="90" cy="62" r="11"/><path class="b" d="M90 73 V82"/><path class="b" d="M70 84 H110"/><path class="b" d="M90 82 V118"/><path class="b" d="M70 84 L56 62 L44 38"/><path class="b" d="M110 84 L124 62 L136 38"/><path class="b" d="M80 122 L76 148 L72 168"/><path class="b" d="M100 122 L104 148 L108 168"/><path class="arw" d="M164 58 V102"/></svg>',
+
+assistedPullUp: '<svg viewBox="0 0 180 180" role="img" aria-label="Trazioni assistite con elastico"><path class="eq" d="M26 22 H154"/><path class="eq" d="M34 22 V10 M146 22 V10"/><path class="cbl" d="M60 26 Q52 96 90 132 Q128 96 120 26"/><circle class="h" cx="90" cy="58" r="11"/><path class="b" d="M90 69 V78"/><path class="b" d="M72 80 H108"/><path class="b" d="M90 78 V114"/><path class="b" d="M72 80 L62 52 L58 26"/><path class="b" d="M108 80 L118 52 L122 26"/><path class="b" d="M90 114 L110 132 L100 152"/><path class="b" d="M90 114 L74 134 L84 154"/><path class="arw" d="M162 112 V68"/></svg>',
+
+wallCurl: '<svg viewBox="0 0 180 180" role="img" aria-label="Curl con manubri schiena al muro"><path class="eq" d="M42 12 V168"/><path class="cbl" d="M42 30 L30 20 M42 62 L30 52 M42 94 L30 84 M42 126 L30 116 M42 158 L30 148"/><circle class="h" cx="62" cy="40" r="10"/><path class="b" d="M58 50 L58 110"/><path class="b" d="M58 62 L62 90 L68 118"/><path class="b" d="M58 66 L64 94 L72 120"/><path class="eq" d="M54 124 H92"/><path class="eqf" d="M50 116 h7 v16 h-7z"/><path class="eqf" d="M89 116 h7 v16 h-7z"/><path class="b" d="M58 110 L68 140 L74 168"/><path class="b" d="M58 110 L52 140 L54 168"/><path class="arw" d="M108 128 Q104 92 88 80"/></svg>',
+
+ezCurlWall: '<svg viewBox="0 0 180 180" role="img" aria-label="Curl con bilanciere EZ schiena al muro"><path class="eq" d="M42 12 V168"/><path class="cbl" d="M42 30 L30 20 M42 62 L30 52 M42 94 L30 84 M42 126 L30 116 M42 158 L30 148"/><circle class="h" cx="62" cy="40" r="10"/><path class="b" d="M58 50 L58 110"/><path class="b" d="M58 62 L62 90 L70 118"/><path class="b" d="M58 66 L66 94 L76 120"/><path class="eq" d="M56 124 q8 -8 16 0 q8 8 16 0 q8 -8 16 0"/><path class="b" d="M58 110 L68 140 L74 168"/><path class="b" d="M58 110 L52 140 L54 168"/><path class="arw" d="M116 128 Q110 92 94 82"/></svg>'
+};
+
+/* ============================================================
+   2. PROGRAMMA  —  per aggiungere un giorno basta un nuovo oggetto qui
+   ============================================================ */
+var PROGRAM = [
+{
+  id: "d1",
+  tab: "Day 1",
+  focus: "Petto · Spalle · Tricipiti",
+  suffix: "push",
+  groups: [
+    { name:"Petto", items:[
+      { id:"p1", short:"1 · Croci cavi", title:"Croci ai cavi dal basso verso l'alto", reps:"15 × 3", rest:'45"',
+        main:{ fig:"cableLowHigh", name:"Cable low-to-high fly",
+               note:"Puleggia al minimo, un passo avanti, busto leggermente inclinato. Chiusura <b>sopra lo sterno</b>, non davanti al bacino." },
+        alt:{ fig:"inclineFly", name:"Croci su panca inclinata 30° con manubri",
+              note:"Stesso angolo di lavoro (<b>alto petto</b>). Gomiti semi-flessi fissi, apertura fino a linea spalle.",
+              planb:"Senza panca → piegamenti con i piedi rialzati e apertura ampia." } },
+      { id:"p2", short:"2 · Chest press", title:"Chest press dritta", reps:"15 × 3", rest:'45"',
+        main:{ fig:"chestPressMachine", name:"Chest press presa neutra/dritta",
+               note:"Schiena aderente, <b>gomiti a ~45°</b> dal busto, non bloccare i gomiti in chiusura." },
+        alt:{ fig:"flatDbPress", name:"Panca piana con manubri",
+              note:"Più range di movimento e stabilizzazione. Usa <b>~10-15% di carico in meno</b> rispetto all'equivalente macchina.",
+              planb:"Con bilanciere se vuoi spingere sul carico; con manubri se cerchi allungamento." } },
+      { id:"p3", short:"3 · Fly", title:"Machine fly mano aperta", reps:"15 × 3", rest:'45"',
+        main:{ fig:"pecDeck", name:"Pec deck / machine fly, mano aperta",
+               note:"Presa aperta per togliere il braccio dalla spinta: <b>spingi con l'avambraccio sul pad</b>, pausa 1\" in chiusura." },
+        alt:{ fig:"flatFlyTop", name:"Croci su panca piana con manubri",
+              note:"Stesso pattern di isolamento. Scendi fino a <b>leggero stiramento</b>, non oltre la linea delle spalle.",
+              planb:"In alternativa: croci ai cavi medi o fly con TRX/anelli in appoggio." } }
+    ]},
+    { name:"Spalle", items:[
+      { id:"s1", short:"4 · Cavi alti", title:"Croci ai cavi alti (deltoide posteriore)", reps:"15 × 3", rest:'45"',
+        main:{ fig:"highCableRearFly", name:"High cable rear delt fly (cavi incrociati)",
+               note:"Pulegge sopra la testa, cavi incrociati. Apertura sulla <b>linea delle spalle</b>, scapole libere di ruotare.",
+               planb:"Variante da scheda: reverse fly alla macchina con più carico." },
+        alt:{ fig:"bentOverRearFly", name:"Reverse fly a busto flesso con manubri",
+              note:"Busto a ~45°, schiena neutra. <b>Carico basso e controllo</b>: se senti i trapezi, abbassa il peso e apri più in basso.",
+              planb:"Equivalente valido: face pull con elastico ancorato in alto." } },
+      { id:"s2", short:"5 · Shoulder", title:"Shoulder press", reps:"15 × 3", rest:'45"',
+        main:{ fig:"shoulderPressMachine", name:"Shoulder press alla macchina",
+               note:"Impugnature all'altezza delle orecchie a inizio serie. <b>Niente iperestensione lombare</b>: costole basse." },
+        alt:{ fig:"dbMilitaryPress", name:"Military press con manubri (in piedi o seduto)",
+              note:"Traiettoria libera, meno stress sulla spalla. <b>Glutei e addome contratti</b> se in piedi, altrimenti panca a 85-90°.",
+              planb:"Arnold press seduto se vuoi più tempo sotto tensione a parità di carico." } }
+    ]},
+    { name:"Tricipiti", superset:true, meta:"superserie · 3 giri", items:[
+      { id:"t1", short:"6 · Pushdown EZ", title:"Pushdown con manubrio ondulato", tag:"A1",
+        tagNote:"15 ripetizioni · carico alto · 0\" di pausa", reps:"15 rip", rest:"carico alto",
+        main:{ fig:"pushdownEz", name:"Pushdown con manubrio ondulato (EZ)",
+               note:"<b>Gomiti incollati al busto</b>, solo l'avambraccio si muove. Fermati a gomito esteso senza scattare." },
+        alt:{ fig:"skullCrusher", name:"French press / skull crusher con EZ",
+              note:"Su panca piana, gomiti fermi puntati al soffitto. Lavora il <b>capo lungo</b> in allungamento, cosa che il pushdown non fa.",
+              planb:"In piedi con un manubrio a due mani se la panca è occupata." } },
+      { id:"t2", short:"7 · Corda", title:"Pushdown alla corda", tag:"A2",
+        tagNote:"12 ripetizioni · ~50% del carico di A1", reps:"12 rip", rest:"~50%",
+        main:{ fig:"pushdownRope", name:"Pushdown alla corda",
+               note:"Metà carico rispetto ad A1. <b>Apri le estremità della corda</b> in fondo al movimento per la contrazione di picco." },
+        alt:{ fig:"dips", name:"Dips alle parallele o tra due panche",
+              note:"<b>Busto verticale</b> e gomiti stretti per spostare il lavoro sul tricipite. Scendi a ~90° di gomito.",
+              planb:"Troppo pesante → piegamenti a presa stretta con le mani sotto le spalle." } }
+    ]}
+  ]
+},
+
+{
+  id: "d2",
+  tab: "Day 2",
+  focus: "Gambe · Carry · Richiami",
+  suffix: "legs & carry",
+  groups: [
+    { name:"Gambe e carry", meta:"4 esercizi", items:[
+      { id:"c1", short:"1 · Sacco light", title:"Camminata con sacco leggero sulle spalle", reps:"rip. da definire", rest:"attivazione",
+        main:{ fig:"sandbagCarry", name:"Sandbag carry, carico leggero",
+               note:"Apertura della seduta: <b>scapole basse, addome attivo</b>, passo corto e costante. Segna nel campo peso i kg del sacco e nelle note i giri percorsi.",
+               planb:"Ripetizioni ancora da definire: tieni fisso il percorso e aumenta prima i giri, poi il carico." },
+        alt:{ fig:"dumbbellCarry", name:"Farmer walk con manubri o zaino zavorrato",
+              note:"Stesso stimolo su core e postura senza sacco. Manubri lungo i fianchi, <b>spalle indietro e busto verticale</b>.",
+              planb:"Con lo zaino zavorrato il carico resta sulle spalle: è la sostituzione più fedele al sacco." } },
+
+      { id:"g1", short:"2 · Pressa", title:"Pressa seduto, carico a scalare", reps:"15-20 × 4", rest:'60"',
+        main:{ fig:"legPress", name:"Pressa orizzontale seduto",
+               note:"Il carico <b>scende serie dopo serie</b>: l'obiettivo è arrivare sempre a 15-20 ripetizioni complete. Piedi a metà pedana, non bloccare le ginocchia in spinta. Registra il carico della <b>prima serie</b>.",
+               planb:"Se a 15 sei ancora fresco, il calo di carico è stato troppo aggressivo: riduci lo scalino." },
+        alt:{ fig:"gobletSquat", name:"Goblet squat con manubrio o kettlebell",
+              note:"Stesso pattern di spinta con più lavoro di core e mobilità. <b>Gomiti dentro le ginocchia</b> in basso, schiena neutra.",
+              planb:"Per volumi alti: affondi camminati o split squat bulgaro a corpo libero." } },
+
+      { id:"g2", short:"3 · Leg curl", title:"Leg curl", reps:"20 × 4", rest:'60"',
+        main:{ fig:"legCurlMachine", name:"Leg curl (prono o seduto)",
+               note:"Bacino aderente, <b>niente spinta con la lombare</b>. Fase negativa lenta: è lì che i femorali lavorano davvero.",
+               planb:"Con 20 ripetizioni serve carico contenuto: meglio pulito che pesante." },
+        alt:{ fig:"slidingLegCurl", name:"Leg curl con fitball o slider",
+              note:"Bacino sollevato, talloni sulla palla: <b>porta i talloni ai glutei</b> senza far cadere le anche. Molto intenso a corpo libero.",
+              planb:"Alternativa valida anche il nordic curl assistito, o stacco rumeno con manubri per il lavoro in allungamento." } },
+
+      { id:"c2", short:"4 · Sacco heavy", title:"Camminata con sacco più pesante", reps:"rip. da definire", rest:"recupero completo",
+        main:{ fig:"sandbagCarry", name:"Sandbag carry, carico pesante",
+               note:"Stesso percorso del primo carry ma con carico alto: <b>interrompi quando la postura cede</b>, non quando finisce il fiato.",
+               planb:"Arriva dopo pressa e leg curl: le gambe sono già affaticate, aspettati meno giri del primo carry." },
+        alt:{ fig:"dumbbellCarry", name:"Farmer walk pesante con manubri",
+              note:"Due manubri pesanti, presa salda, <b>passi corti</b>. La presa cede prima delle gambe: è normale, è parte dello stimolo.",
+              planb:"Se disponibile, trap bar carry: carico più alto con meno stress sulla presa." } }
+    ]},
+
+    { name:"Richiami", meta:"2 esercizi · 6 serie", items:[
+      { id:"r1", short:"5 · Machine fly", title:"Ripresa petto: machine fly", reps:"15 × 3", rest:'60"',
+        main:{ fig:"pecDeck", name:"Machine fly / pec deck",
+               note:"Richiamo, non seduta di petto: <b>carico moderato</b> e contrazione pulita, pausa 1\" in chiusura.",
+               planb:"Se il petto è ancora affaticato dal Day 1, scendi di carico invece di saltare l'esercizio." },
+        alt:{ fig:"flatFlyTop", name:"Croci su panca piana con manubri",
+              note:"Stesso isolamento senza macchina. Gomiti semi-flessi fissi, discesa fino a <b>leggero stiramento</b>.",
+              planb:"In alternativa croci ai cavi medi, più costanti sulla tensione." } },
+
+      { id:"r2", short:"6 · Reverse fly", title:"Ripresa spalle: reverse fly", reps:"15 × 3", rest:'60"',
+        main:{ fig:"reverseFlyMachine", name:"Reverse fly alla macchina",
+               note:"Petto appoggiato al pad, <b>apertura sulla linea delle spalle</b>. Se senti i trapezi, abbassa il carico e apri più in basso.",
+               planb:"È lo stesso muscolo del Day 1 (deltoide posteriore): tieni carichi confrontabili tra le due sedute." },
+        alt:{ fig:"bentOverRearFly", name:"Reverse fly a busto flesso con manubri",
+              note:"Busto a ~45°, schiena neutra, <b>carico basso e controllo</b>. Pausa breve in apertura.",
+              planb:"Equivalente valido: face pull con elastico ancorato in alto." } }
+    ]},
+
+    { name:"Finisher", meta:"metabolico · 3-5 min", items:[
+      { id:"f1", short:"7 · Jump squat", title:"Jump squat", reps:"3-5 min", rest:"a esaurimento", unit:"min",
+        main:{ fig:"jumpSquat", name:"Jump squat continuativi",
+               note:"Blocco a tempo: <b>3 minuti come base, 5 come tetto</b>. Atterraggio morbido su tutto il piede, ginocchia allineate ai piedi. Registra i minuti effettivi.",
+               planb:"Gestisci il ritmo: meglio 4 minuti continui che 2 minuti veloci e poi fermo." },
+        alt:{ fig:"boxStepUp", name:"Step-up esplosivi su panca",
+              note:"Stesso effetto metabolico con <b>molto meno impatto su ginocchia e caviglie</b>. Alterna la gamba di spinta ogni 30\".",
+              planb:"Altre opzioni a pari stimolo: salto della corda o air squat veloci." } }
+    ]}
+  ]
+},
+
+{
+  id: "d3",
+  tab: "Day 3",
+  focus: "Petto · Spalle · Dorsali · Bicipiti",
+  suffix: "pull",
+  groups: [
+    { name:"Petto", meta:"1 esercizio · 3 serie", items:[
+      { id:"p4", short:"1 · Croci cavi", title:"Croci ai cavi dal basso verso l'alto", reps:"15 × 3", rest:'45"',
+        main:{ fig:"cableLowHigh", name:"Cable low-to-high fly",
+               note:"Stesso esercizio del Day 1: puleggia al minimo, chiusura <b>sopra lo sterno</b>. Confronta il carico con la sessione precedente, è il tuo riferimento di progressione.",
+               planb:"Qui è un richiamo, non una seduta di petto: se arrivi stanco resta sul carico del Day 1 senza forzare." },
+        alt:{ fig:"inclineFly", name:"Croci su panca inclinata 30° con manubri",
+              note:"Stesso angolo di lavoro sull'<b>alto petto</b>. Gomiti semi-flessi fissi, apertura fino a linea spalle.",
+              planb:"Senza panca → piegamenti con i piedi rialzati e apertura ampia." } }
+    ]},
+
+    { name:"Spalle", meta:"1 esercizio · 3 serie", items:[
+      { id:"s3", short:"2 · Cavi alti", title:"Croci ai cavi alti (deltoide posteriore)", reps:"15 × 3", rest:'45"',
+        main:{ fig:"highCableRearFly", name:"High cable rear delt fly (cavi incrociati)",
+               note:"Pulegge sopra la testa, cavi incrociati. Apertura sulla <b>linea delle spalle</b>, scapole libere di ruotare.",
+               planb:"Precede il lavoro sui dorsali: tieni carichi contenuti o arrivi alla lat machine con il posteriore già cotto." },
+        alt:{ fig:"bentOverRearFly", name:"Reverse fly a busto flesso con manubri",
+              note:"Busto a ~45°, schiena neutra. <b>Carico basso e controllo</b>: se senti i trapezi, abbassa il peso e apri più in basso.",
+              planb:"Equivalente valido: face pull con elastico ancorato in alto." } }
+    ]},
+
+    { name:"Dorsali", meta:"1 esercizio · 3 serie", items:[
+      { id:"l1", short:"3 · Lat machine", title:"Lat machine, 10 pesanti + 5 scariche", reps:"15 × 3", rest:'45"',
+        main:{ fig:"latPulldown", name:"Lat machine a presa larga",
+               note:"Ogni serie da 15 è spezzata: <b>10 ripetizioni a carico alto</b>, poi scarichi e chiudi con <b>5 ripetizioni</b> senza pausa. Tira con i gomiti verso le costole, non con le mani; petto alto, niente slancio del busto. Registra il carico delle prime 10.",
+               planb:"Regola pratica per lo scarico: togli circa il 30-40% per riuscire a chiudere le ultime 5 pulite." },
+        alt:{ fig:"assistedPullUp", name:"Trazioni alla sbarra assistite con elastico",
+              note:"Stessa trazione verticale a corpo libero. L'elastico sostituisce lo scarico di carico: <b>10 con elastico leggero, 5 con elastico più spesso</b>.",
+              planb:"In alternativa pulldown con elastico ancorato in alto, o rematore con manubrio se la sbarra non c'è." } }
+    ]},
+
+    { name:"Bicipiti", meta:"1 esercizio · piramidale", items:[
+      { id:"b1", short:"4 · Curl muro", title:"Curl con schiena al muro, 30-12-10", reps:"30 · 12 · 10", rest:'60"',
+        main:{ fig:"wallCurl", name:"Curl con manubri, schiena al muro",
+               note:"Il muro elimina lo slancio: <b>scapole e glutei sempre a contatto</b>, gomiti fermi lungo i fianchi. Scendi fino alla <b>massima estensione del braccio</b>, è quello che rende dura la prima serie da 30. Carico crescente serie dopo serie: registra il peso della serie da 10.",
+               planb:"Se ti stacchi dal muro o i gomiti vanno avanti, il carico è troppo alto: scendi e completa le ripetizioni." },
+        alt:{ fig:"ezCurlWall", name:"Curl con bilanciere EZ, schiena al muro",
+              note:"Stessa impostazione con presa neutra a polsi liberi: <b>meno stress sui polsi</b> e carico più facile da micro-regolare tra le tre serie.",
+              planb:"Con elastico o ai cavi bassi la tensione resta costante anche in alto: utile soprattutto nella serie da 30." } }
+    ]}
+  ]
+}
+];
+
+/* ============================================================
+   3. MOTORE
+   ============================================================ */
+(function(){
+  var KEY = "palestra-log-v1";
+  var $ = function(s){ return document.querySelector(s); };
+  var store = { v:1, sessions:{} };
+  var canStore = true;
+  var curDay = PROGRAM[0], curDate = "", cur = { ex:{}, note:"" };
+  var saveTimer = null;
+
+  /* ---- storage ---- */
+  function load(){
+    try {
+      var raw = localStorage.getItem(KEY);
+      localStorage.setItem(KEY + "-probe", "1");
+      localStorage.removeItem(KEY + "-probe");
+      if(raw){ var o = JSON.parse(raw); if(o && o.sessions) store = o; }
+    } catch(e){
+      canStore = false;
+      $("#banner").classList.add("on");
+    }
+  }
+  function persist(){
+    if(!canStore) return false;
+    try { localStorage.setItem(KEY, JSON.stringify(store)); return true; }
+    catch(e){ canStore = false; $("#banner").classList.add("on"); return false; }
+  }
+
+  /* ---- helpers ---- */
+  function todayISO(){
+    var d = new Date(), p = function(n){ return (n<10?"0":"")+n; };
+    return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());
+  }
+  function fmt(iso){ if(!iso) return "—"; var a=iso.split("-"); return a[2]+"/"+a[1]+"/"+a[0].slice(2); }
+  function setStatus(t, ok){ $("#status").textContent = t; $("#status").className = "status" + (ok?" ok":""); }
+  function daySessions(){ return (store.sessions[curDay.id] = store.sessions[curDay.id] || {}); }
+  function items(){
+    var out = [];
+    curDay.groups.forEach(function(g){ g.items.forEach(function(i){ out.push(i); }); });
+    return out;
+  }
+  function hasData(s){
+    if(s.note && s.note.trim()) return true;
+    for(var k in s.ex){ if(s.ex[k] && s.ex[k].w) return true; }
+    return false;
+  }
+
+  /* ---- render programma ---- */
+  function logBar(it){
+    var u = it.unit || "kg";
+    return '<div class="log" data-ex="'+it.id+'" data-unit="'+u+'">'
+      + '<div class="seg" role="group" aria-label="Variante usata">'
+      +   '<button type="button" data-v="s" aria-pressed="true">Scheda</button>'
+      +   '<button type="button" data-v="a" aria-pressed="false">Alt</button>'
+      + '</div>'
+      + '<label class="w-field"><input type="number" inputmode="decimal" step="0.5" min="0" placeholder="—" aria-label="Valore in '+u+'"><span>'+u+'</span></label>'
+      + '<span class="last">Ultima: <b>—</b></span></div>';
+  }
+  function panels(it){
+    var m = it.main, a = it.alt;
+    return '<div class="panels">'
+      + '<div class="panel pri"><span class="p-label">Scheda</span><div class="figbox">'+(FIGS[m.fig]||"")+'</div>'
+      +   '<p class="p-name">'+m.name+'</p><p class="p-note">'+m.note+'</p>'
+      +   (m.planb?'<p class="planb">'+m.planb+'</p>':'') + '</div>'
+      + '<div class="panel alt"><span class="p-label">Alternativa</span><div class="figbox">'+(FIGS[a.fig]||"")+'</div>'
+      +   '<p class="p-name">'+a.name+'</p><p class="p-note">'+a.note+'</p>'
+      +   (a.planb?'<p class="planb">'+a.planb+'</p>':'') + '</div></div>';
+  }
+  function renderProgram(){
+    var n = 0, html = "";
+    curDay.groups.forEach(function(g){
+      var count = g.items.length;
+      var meta = g.meta || (count + (count===1?" esercizio":" esercizi"));
+      html += '<section><div class="sec-head"><h2>'+g.name+'</h2><span class="meta">'+meta+'</span></div>';
+      if(g.superset){
+        n++;
+        html += '<article class="card"><div class="card-head"><span class="num">'+n+'</span>'
+             +  '<h3>'+g.items.map(function(i){return i.title;}).join(" + ")+'</h3>'
+             +  '<div class="chips"><span class="chip ss">Superserie</span><span class="chip rest">3 giri</span></div></div>';
+        g.items.forEach(function(it, idx){
+          if(idx) html += '<div class="ss-link">↓ senza pausa ↓</div>';
+          html += '<div class="ss-row"><div class="ss-tag"><em>'+(it.tag||"")+'</em> '+(it.tagNote||"")+'</div>'
+               +  panels(it) + logBar(it) + '</div>';
+        });
+        html += '</article>';
+      } else {
+        g.items.forEach(function(it){
+          n++;
+          html += '<article class="card"><div class="card-head"><span class="num">'+n+'</span><h3>'+it.title+'</h3>'
+               +  '<div class="chips"><span class="chip">'+(it.reps||"")+'</span>'
+               +  (it.rest?'<span class="chip rest">'+it.rest+'</span>':'')+'</div></div>'
+               +  panels(it) + logBar(it) + '</article>';
+        });
+      }
+      html += '</section>';
+    });
+    $("#program").innerHTML = html;
+    $("#kicker").textContent = "Scheda palestra · " + curDay.tab;
+    $("#title").innerHTML = curDay.focus + (curDay.suffix ? ' <span>— '+curDay.suffix+'</span>' : '');
+    var tot = items().length;
+    $("#volume").textContent = tot + " esercizi";
+  }
+
+  /* ---- tabs giorni ---- */
+  function renderDays(){
+    var h = "";
+    PROGRAM.forEach(function(d){
+      h += '<button type="button" data-day="'+d.id+'" aria-pressed="'+(d.id===curDay.id)+'">'+d.tab+'</button>';
+    });
+    $("#days").innerHTML = h;
+  }
+
+  /* ---- form ↔ dati ---- */
+  function fillForm(){
+    document.querySelectorAll(".log").forEach(function(box){
+      var e = cur.ex[box.dataset.ex] || {};
+      var inp = box.querySelector("input");
+      inp.value = e.w || "";
+      box.querySelector(".w-field").classList.toggle("filled", !!e.w);
+      paintSeg(box, e.v);
+    });
+    $("#note").value = cur.note || "";
+  }
+  function paintSeg(box, v){
+    box.querySelectorAll(".seg button").forEach(function(b){
+      b.setAttribute("aria-pressed", b.dataset.v === (v||"s") ? "true" : "false");
+    });
+  }
+  function loadDate(iso){
+    curDate = iso;
+    var s = daySessions()[iso];
+    cur = s ? JSON.parse(JSON.stringify(s)) : { ex:{}, note:"" };
+    if(!cur.ex) cur.ex = {};
+    fillForm(); renderLast(); renderHistory();
+  }
+  function queueSave(){
+    clearTimeout(saveTimer);
+    setStatus("salvataggio…");
+    saveTimer = setTimeout(commit, 450);
+  }
+  function commit(){
+    var d = daySessions();
+    if(hasData(cur)) d[curDate] = JSON.parse(JSON.stringify(cur));
+    else delete d[curDate];
+    setStatus(persist() ? "salvato" : "non salvato", canStore);
+    renderLast(); renderHistory();
+  }
+
+  /* ---- ultima volta ---- */
+  function sortedDates(){ return Object.keys(daySessions()).sort().reverse(); }
+  function renderLast(){
+    var dates = sortedDates();
+    document.querySelectorAll(".log").forEach(function(box){
+      var id = box.dataset.ex, out = box.querySelector(".last"), found = null;
+      for(var i=0;i<dates.length;i++){
+        if(dates[i] >= curDate) continue;
+        var e = (daySessions()[dates[i]].ex || {})[id];
+        if(e && e.w){ found = {d:dates[i], e:e}; break; }
+      }
+      out.innerHTML = found
+        ? 'Ultima: <b>'+found.e.w+' '+(box.dataset.unit||"kg")+'</b> · '+fmt(found.d)
+          + '<span class="vtag'+(found.e.v==="a"?" a":"")+'">'+(found.e.v==="a"?"alt":"scheda")+'</span>'
+        : 'Ultima: <b>—</b>';
+    });
+  }
+
+  /* ---- storico ---- */
+  function renderHistory(){
+    var dates = sortedDates(), list = items();
+    $("#hcount").textContent = curDay.tab + " · " + dates.length + (dates.length===1?" seduta":" sedute");
+    if(!dates.length){
+      $("#history").innerHTML = '<p class="empty">Nessuna seduta registrata per '+curDay.tab+'. Inserisci i pesi: li ritroverai qui la prossima volta.</p>';
+      return;
+    }
+    var h = '<table><thead><tr><th>Data</th>';
+    list.forEach(function(x){ h += '<th>'+x.short+'</th>'; });
+    h += '</tr></thead><tbody>';
+    dates.slice(0,40).forEach(function(d){
+      var s = daySessions()[d];
+      h += '<tr class="'+(d===curDate?"cur":"")+'"><td>'+fmt(d)+'</td>';
+      list.forEach(function(x){
+        var e = (s.ex||{})[x.id];
+        var u = (x.unit && x.unit !== "kg") ? ' <span class="m" style="color:var(--ink-2)">'+x.unit+'</span>' : '';
+        h += '<td>' + (e && e.w
+          ? '<span class="v">'+e.w+'</span>'+u+(e.v==="a"?' <span class="m">alt</span>':'')
+          : '<span style="opacity:.35">—</span>') + '</td>';
+      });
+      h += '</tr>';
+    });
+    $("#history").innerHTML = h + '</tbody></table>';
+  }
+
+  /* ---- eventi ---- */
+  $("#program").addEventListener("input", function(ev){
+    var box = ev.target.closest(".log"); if(!box) return;
+    var id = box.dataset.ex, val = ev.target.value.trim();
+    var e = cur.ex[id] || (cur.ex[id] = {w:"", v:"s"});
+    e.w = val;
+    if(!e.w && e.v === "s") delete cur.ex[id];
+    box.querySelector(".w-field").classList.toggle("filled", !!val);
+    queueSave();
+  });
+  $("#program").addEventListener("click", function(ev){
+    var btn = ev.target.closest(".seg button"); if(!btn) return;
+    var box = btn.closest(".log"), id = box.dataset.ex;
+    var e = cur.ex[id] || (cur.ex[id] = {w:"", v:"s"});
+    e.v = btn.dataset.v;
+    if(!e.w && e.v === "s") delete cur.ex[id];
+    paintSeg(box, btn.dataset.v);
+    queueSave();
+  });
+  $("#note").addEventListener("input", function(){ cur.note = this.value; queueSave(); });
+
+  $("#days").addEventListener("click", function(ev){
+    var b = ev.target.closest("button[data-day]"); if(!b) return;
+    clearTimeout(saveTimer); commit();
+    curDay = PROGRAM.filter(function(d){ return d.id === b.dataset.day; })[0] || PROGRAM[0];
+    renderDays(); renderProgram(); loadDate(curDate); setStatus("—");
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+
+  $("#sdate").addEventListener("change", function(){
+    if(!this.value) return;
+    clearTimeout(saveTimer); commit(); loadDate(this.value); setStatus("—");
+  });
+
+  $("#copyLast").addEventListener("click", function(){
+    var dates = sortedDates(), src = null;
+    for(var i=0;i<dates.length;i++){ if(dates[i] < curDate){ src = daySessions()[dates[i]]; break; } }
+    if(!src){ setStatus("nessuna seduta precedente"); return; }
+    cur.ex = JSON.parse(JSON.stringify(src.ex || {}));
+    fillForm(); commit();
+  });
+
+  $("#delCur").addEventListener("click", function(){
+    if(!daySessions()[curDate]){ setStatus("niente da eliminare"); return; }
+    if(!confirm("Eliminare i dati del " + fmt(curDate) + " (" + curDay.tab + ")?")) return;
+    cur = { ex:{}, note:"" }; fillForm(); commit();
+  });
+
+  /* ---- backup ---- */
+  function download(name, text, mime){
+    try{
+      var blob = new Blob([mime.indexOf("csv")>-1 ? "\ufeff"+text : text], {type:mime});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
+    } catch(e){ setStatus("export non riuscito"); }
+  }
+  $("#expJson").addEventListener("click", function(){
+    download("palestra-backup-"+todayISO()+".json", JSON.stringify(store, null, 2), "application/json");
+  });
+  $("#impJson").addEventListener("click", function(){ $("#fileIn").click(); });
+  $("#fileIn").addEventListener("change", function(){
+    var f = this.files && this.files[0]; if(!f) return;
+    var r = new FileReader();
+    r.onload = function(){
+      try{
+        var o = JSON.parse(r.result);
+        if(!o || !o.sessions) throw 0;
+        Object.keys(o.sessions).forEach(function(day){
+          store.sessions[day] = store.sessions[day] || {};
+          Object.keys(o.sessions[day]).forEach(function(d){ store.sessions[day][d] = o.sessions[day][d]; });
+        });
+        persist(); loadDate(curDate); setStatus("backup importato", true);
+      } catch(e){ setStatus("file non valido"); }
+    };
+    r.readAsText(f); this.value = "";
+  });
+  $("#expCsv").addEventListener("click", function(){
+    var dates = sortedDates(); if(!dates.length){ setStatus("storico vuoto"); return; }
+    var list = items();
+    var rows = [["Data"].concat(list.map(function(x){ return x.title; })).concat(["Varianti","Note"])];
+    dates.forEach(function(d){
+      var s = daySessions()[d];
+      var w = list.map(function(x){ var e=(s.ex||{})[x.id]; return e&&e.w?e.w:""; });
+      var v = list.map(function(x){ var e=(s.ex||{})[x.id]; return e&&e.w?(e.v==="a"?"alt":"scheda"):""; }).join("|");
+      rows.push([d].concat(w).concat([v, (s.note||"").replace(/[\r\n]+/g," ")]));
+    });
+    var csv = rows.map(function(r){
+      return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"'; }).join(";");
+    }).join("\n");
+    download("palestra-"+curDay.id+"-"+todayISO()+".csv", csv, "text/csv;charset=utf-8");
+  });
+
+  /* ---- boot ---- */
+  load();
+  renderDays();
+  renderProgram();
+  $("#sdate").value = todayISO();
+  loadDate(todayISO());
+  setStatus("—");
+})();
+</script>
+</body>
+</html>
