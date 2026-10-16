@@ -332,6 +332,19 @@ body.has-timer{padding-bottom:96px}
   .bal-b{grid-column:1/-1;order:3}
   .tm-txt b{font-size:26px}
 }
+
+/* ---------- corsa: data iOS e durata min:sec ---------- */
+.fld input[type=date]{-webkit-appearance:none;appearance:none;display:block;max-width:100%;line-height:44px;text-align:left}
+.fld input[type=date]::-webkit-date-and-time-value{text-align:left;margin:0}
+.fld input[type=date]::-webkit-calendar-picker-indicator{opacity:.55}
+.dur{display:flex;align-items:center;gap:6px;min-width:0}
+.dur input{flex:1 1 0;min-width:0;text-align:center}
+.dur span{font-weight:800;color:var(--ink-2)}
+.form{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:640px){
+  .form{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fld.f-date{grid-column:1/-1}
+}
 </style>
 </head>
 <body>
@@ -406,13 +419,13 @@ body.has-timer{padding-bottom:96px}
     <header class="ph">
       <div class="kicker" style="color:var(--teal)">Cardio</div>
       <h1>Corsa</h1>
-      <p class="sub">Registra data, durata, chilometri e battito medio. Ritmo e velocità vengono calcolati in automatico. La durata accetta <b>45</b>, <b>45:30</b> o <b>1:05:00</b>.</p>
+      <p class="sub">Registra data, durata, chilometri e battito medio. Ritmo e velocità vengono calcolati in automatico. La durata si inserisce in minuti e secondi: per un'ora e cinque minuti scrivi <b>65</b> minuti.</p>
     </header>
     <div class="block">
       <h2 id="rTitle">Nuova corsa</h2>
       <div class="form">
-        <div class="fld"><label for="rDate">Data</label><input type="date" id="rDate"></div>
-        <div class="fld"><label for="rDur">Durata</label><input type="text" id="rDur" inputmode="numeric" placeholder="mm:ss" autocomplete="off"></div>
+        <div class="fld f-date"><label for="rDate">Data</label><input type="date" id="rDate"></div>
+        <div class="fld f-dur"><label for="rMin">Durata</label><div class="dur"><input type="text" id="rMin" inputmode="numeric" pattern="[0-9]*" maxlength="3" placeholder="min" autocomplete="off" aria-label="Durata, minuti"><span aria-hidden="true">:</span><input type="text" id="rSec" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="sec" autocomplete="off" aria-label="Durata, secondi"></div></div>
         <div class="fld"><label for="rKm">Km</label><input type="text" id="rKm" inputmode="decimal" autocomplete="off" placeholder="0,00"></div>
         <div class="fld"><label for="rHr">Battito medio</label><input type="text" id="rHr" inputmode="numeric" autocomplete="off" placeholder="bpm"></div>
         <div class="fld wide"><label for="rNote">Note</label><input type="text" id="rNote" placeholder="Percorso, sensazioni, meteo…" autocomplete="off"></div>
@@ -775,6 +788,7 @@ var PROGRAM = [
     var h = Math.floor(sec/3600), m = Math.floor(sec%3600/60), s = sec%60;
     return h ? h + ":" + pad(m) + ":" + pad(s) : m + ":" + pad(s);
   }
+  function durVal(){ var m = parseInt($("#rMin").value, 10) || 0, s = parseInt($("#rSec").value, 10) || 0; return m * 60 + s; }
   function parseDur(t){
     t = String(t || "").trim().replace(/[.,;' ]/g, ":").replace(/:+/g, ":").replace(/^:|:$/g, "");
     if(!t) return 0;
@@ -1265,7 +1279,7 @@ var PROGRAM = [
      ============================================================ */
   function runMsg(t, err){ var m = $("#rMsg"); m.textContent = t; m.className = "msg" + (err ? " err" : ""); if(t) setTimeout(function(){ if(m.textContent === t) m.textContent = ""; }, 3500); }
   function runLive(){
-    var sec = parseDur($("#rDur").value), km = num($("#rKm").value);
+    var sec = durVal(), km = num($("#rKm").value);
     var parts = [];
     if(sec) parts.push("Durata <b>" + fmtDur(sec) + "</b>");
     if(sec && km > 0){ parts.push("Ritmo <b>" + paceOf(sec, km) + "</b>"); parts.push("Velocità <b>" + nf(km / (sec/3600), 1) + " km/h</b>"); }
@@ -1273,7 +1287,7 @@ var PROGRAM = [
   }
   function runReset(){
     editRun = null;
-    $("#rDate").value = todayISO(); $("#rDur").value = ""; $("#rKm").value = ""; $("#rHr").value = ""; $("#rNote").value = "";
+    $("#rDate").value = todayISO(); $("#rMin").value = ""; $("#rSec").value = ""; $("#rKm").value = ""; $("#rHr").value = ""; $("#rNote").value = "";
     $("#rTitle").textContent = "Nuova corsa"; $("#rSave").textContent = "Salva corsa"; $("#rCancel").hidden = true;
     runLive();
   }
@@ -1306,9 +1320,10 @@ var PROGRAM = [
     });
     $("#rList").innerHTML = h + '</tbody></table>';
   }
-  ["rDur", "rKm"].forEach(function(id){ $("#" + id).addEventListener("input", runLive); });
+  ["rMin", "rSec"].forEach(function(id){ $("#" + id).addEventListener("input", function(){ var c = this.value.replace(/\D/g, ""); if(c !== this.value) this.value = c; runLive(); }); });
+  $("#rKm").addEventListener("input", runLive);
   $("#rSave").addEventListener("click", function(){
-    var date = $("#rDate").value || todayISO(), sec = parseDur($("#rDur").value), km = num($("#rKm").value), hr = parseInt($("#rHr").value, 10);
+    var date = $("#rDate").value || todayISO(), sec = durVal(), km = num($("#rKm").value), hr = parseInt($("#rHr").value, 10);
     if(!sec && !(km > 0)){ runMsg("Inserisci almeno durata o km", true); return; }
     var run = { id: editRun || ("r" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6)), date: date,
                 sec: sec || 0, km: km > 0 ? Math.round(km * 100) / 100 : 0, hr: hr > 0 ? hr : null, note: $("#rNote").value.trim() };
@@ -1326,7 +1341,7 @@ var PROGRAM = [
     if(e){
       var r = store.runs.filter(function(x){ return x.id === e.dataset.edit; })[0]; if(!r) return;
       editRun = r.id;
-      $("#rDate").value = r.date; $("#rDur").value = r.sec ? fmtDur(r.sec) : ""; $("#rKm").value = r.km ? String(r.km).replace(".", ",") : "";
+      $("#rDate").value = r.date; $("#rMin").value = r.sec ? Math.floor(r.sec / 60) : ""; $("#rSec").value = r.sec ? pad(r.sec % 60) : ""; $("#rKm").value = r.km ? String(r.km).replace(".", ",") : "";
       $("#rHr").value = r.hr || ""; $("#rNote").value = r.note || "";
       $("#rTitle").textContent = "Modifica corsa del " + fmt(r.date); $("#rSave").textContent = "Aggiorna corsa"; $("#rCancel").hidden = false;
       runLive(); renderRun(); window.scrollTo({ top:0, behavior:"smooth" });
