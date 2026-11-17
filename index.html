@@ -345,6 +345,122 @@ body.has-timer{padding-bottom:96px}
   .form{grid-template-columns:repeat(2,minmax(0,1fr))}
   .fld.f-date{grid-column:1/-1}
 }
+
+/* ---------- Day Jolly: pagina ---------- */
+.jc-top{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.f-jdate{width:180px}
+.jc-dur{flex:1;min-width:180px;font-size:12.5px;color:var(--ink-2);padding-bottom:13px}
+.jc-dur b{color:var(--ink)}
+.big-go{height:48px;padding:0 18px;font-size:14px;gap:8px}
+.big-go svg{width:15px;height:15px}
+.jseq{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:16px}
+.jst{display:flex;flex-direction:column;gap:8px;min-width:0;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:10px}
+.jst-fig{width:100%;max-width:120px;aspect-ratio:1/1;margin:0 auto}
+.jst-fig svg,.cx-fig svg{width:100%;height:100%;display:block}
+.jst-t{display:flex;flex-direction:column;gap:3px;min-width:0}
+.jst-t b{font-size:13px}
+.jst-tm{font-size:11.5px;font-weight:700;color:var(--accent)}
+.jst-tip{font-size:11.5px;color:var(--ink-2);line-height:1.4}
+.jt{border-collapse:collapse;width:100%;font-size:13px}
+.jt th,.jt td{padding:6px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+.jt th{font:750 10px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.jt th:first-child,.jt td:first-child{text-align:left;font-weight:750}
+.jt input{width:100%;min-width:52px;height:42px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink);font:750 17px/1 var(--sans);text-align:center}
+.jt input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.jt input::placeholder{color:var(--ink-2);opacity:.5;font-weight:600}
+.jt tfoot td{font-weight:800;border-bottom:0;padding-top:10px}
+.jt-tot{font-weight:800}
+.jh tbody tr{cursor:pointer}
+.jh tbody tr.cur td{background:var(--accent-soft)}
+.jex{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:10px;font-size:12.5px;color:var(--ink-2)}
+.jex b{color:var(--ink);font-size:14px}
+.pill.j,.strip .pill.j{background:var(--warn-soft);color:var(--warn)}
+.sw.h{background:var(--warn)}
+.chart .bh{fill:var(--warn)}
+.chart .ln.s4{stroke:var(--warn)} .chart .pt.s4{fill:var(--warn);stroke:var(--warn)}
+
+/* ---------- Day Jolly: circuito guidato a schermo intero ---------- */
+.cx{position:fixed;inset:0;z-index:70;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);
+  padding:calc(12px + env(safe-area-inset-top,0px)) 16px calc(14px + env(safe-area-inset-bottom,0px));overflow-y:auto;-webkit-overflow-scrolling:touch;transition:background-color .3s ease}
+.cx[hidden]{display:none}
+.cx.k-work{background:var(--accent);color:#fff}
+.cx.k-rest{background:var(--teal);color:#fff}
+.cx.k-setrest{background:var(--ink);color:var(--bg)}
+.cx-top{display:flex;align-items:center;gap:12px;width:100%;max-width:560px;margin:0 auto}
+.cx-set{font:800 13px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.cx-dots{display:flex;gap:6px;flex:1}
+.cx-dots i{flex:1;height:5px;border-radius:3px;background:currentColor;opacity:.22}
+.cx-dots i.ok{opacity:.6} .cx-dots i.on{opacity:1}
+.cx-x{width:40px;height:40px;border-radius:12px;border:1px solid currentColor;background:transparent;color:inherit;font:700 16px/1 var(--sans);opacity:.85;cursor:pointer;flex:none}
+.cx-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;width:100%;max-width:560px;margin:0 auto;padding:12px 0}
+.cx-ph{font:800 12px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;opacity:.88}
+.cx-name{font-size:clamp(28px,8vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.cx-name.sm{font-size:clamp(19px,5.5vw,27px)}
+.cx-fig{width:min(46vw,190px);aspect-ratio:1/1;background:var(--surface);border-radius:22px;margin:8px 0;padding:6px}
+.cx-time{font-size:clamp(72px,24vw,128px);font-weight:800;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.cx.paused .cx-time{opacity:.4}
+.cx-bar{width:100%;max-width:420px;height:6px;border-radius:3px;background:rgba(128,128,128,.32);overflow:hidden}
+.cx-bar i{display:block;height:100%;background:currentColor;transform-origin:left center;transition:transform .2s linear}
+.cx-next{font-size:14px;opacity:.88;margin-top:6px}
+.cx-in{width:100%;margin-top:14px;background:var(--surface);color:var(--ink);border-radius:18px;padding:14px}
+.cx-in-h{font:800 11px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-bottom:10px;text-align:left}
+.cx-in-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cx-in-g.one{grid-template-columns:1fr}
+.cx-in label{display:flex;flex-direction:column;gap:4px;text-align:left;min-width:0}
+.cx-in label span{font-size:12px;font-weight:700;color:var(--ink-2)}
+.cx-in input{width:100%;min-width:0;height:56px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2);color:var(--ink);font:800 26px/1 var(--sans);text-align:center}
+.cx-in input:focus{outline:none;border-color:var(--accent)}
+.cx-in input::placeholder{color:var(--ink-2);opacity:.45}
+.cx-in small{font-size:11px;color:var(--ink-2)}
+.cx-sum{font-size:14px;margin-top:10px;opacity:.9}
+.cx-ctrl{display:flex;gap:10px;width:100%;max-width:560px;margin:0 auto}
+.cx-ctrl[hidden]{display:none}
+.cx-b{flex:1;height:52px;border-radius:14px;border:1px solid currentColor;background:transparent;color:inherit;font:750 15px/1 var(--sans);cursor:pointer}
+.cx-b:active{opacity:.7}
+.cx-b.solid{background:var(--accent);border-color:var(--accent);color:#fff}
+.cx-endb{display:flex;flex-direction:column;gap:10px;width:100%;margin-top:14px}
+.cx-endb .cx-b{flex:none}
+
+@media (max-width:640px){
+  .jseq{grid-template-columns:1fr}
+  .jst{flex-direction:row;align-items:center}
+  .jst-fig{width:72px;flex:none;margin:0}
+  .f-jdate{width:100%}
+  .big-go{width:100%;justify-content:center}
+  .jc-dur{padding-bottom:0}
+}
+
+/* ---------- Home: frase del giorno, avanzamento, scelta allenamento ---------- */
+.quote{position:relative;margin:14px 0 12px;padding:14px 16px 14px 46px;max-width:660px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--radius)}
+.quote::before{content:"\201C";position:absolute;left:13px;top:6px;font:700 46px/1 Georgia,"Times New Roman",serif;color:var(--accent);opacity:.8}
+.quote blockquote{margin:0;font-size:16px;line-height:1.45;font-weight:600;font-style:italic;color:var(--ink)}
+.quote figcaption{margin-top:6px;font-size:12px;font-weight:650;color:var(--ink-2)}
+.quote figcaption::before{content:"— "}
+.wkp{margin-top:14px;max-width:660px}
+.wkp-h{font-size:12.5px;color:var(--ink-2);margin-bottom:6px;line-height:1.4}
+.wkp-h b{color:var(--ink)}
+.wkp-b{height:8px;border-radius:5px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+.wkp-b i{display:block;height:100%;border-radius:5px;background:var(--accent);transition:width .4s ease}
+.wkp.ok .wkp-b i{background:var(--teal)}
+.pick{display:flex;flex-direction:column;gap:8px}
+.pick-o{display:flex;align-items:center;gap:12px;min-width:0;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;transition:border-color .15s ease,transform .1s ease}
+.pick-o:hover{border-color:var(--ink-2)}
+.pick-o:active{transform:scale(.99)}
+.pick-o.rec{border:2px solid var(--accent);background:var(--accent-soft);padding:11px 13px}
+.pick-ic{display:grid;place-items:center;flex:none;width:42px;height:42px;border-radius:12px;background:var(--surface-2);color:var(--ink-2);font:800 13px/1 var(--sans)}
+.pick-ic svg{width:20px;height:20px}
+.pick-o.rec .pick-ic{background:var(--accent);color:#fff}
+.pick-o.j .pick-ic{background:var(--warn-soft);color:var(--warn)}
+.pick-o.r .pick-ic{background:var(--teal-soft);color:var(--teal)}
+.pick-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pick-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pick-h b{font-size:15.5px}
+.pick-t small{font-size:12px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pick-t small.pick-l{font-size:11.5px;opacity:.85}
+.pick-b{font:800 10px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:6px;background:var(--accent);color:#fff}
+.pick-b.ok{background:var(--teal-soft);color:var(--teal)}
+.pick-ch{flex:none;font-size:24px;line-height:1;color:var(--ink-2)}
+.hero .tile.solo{grid-column:1/-1}
 </style>
 </head>
 <body>
@@ -373,6 +489,9 @@ body.has-timer{padding-bottom:96px}
 
   <!-- ======================= HOME ======================= -->
   <div class="page" id="page-home"></div>
+
+  <!-- ======================= DAY JOLLY ======================= -->
+  <div class="page" id="page-jolly"></div>
 
   <!-- ======================= ANALISI ======================= -->
   <div class="page" id="page-analisi"></div>
@@ -469,6 +588,7 @@ body.has-timer{padding-bottom:96px}
         <select id="csvDay" aria-label="Giorno da esportare"></select>
         <button class="btn" id="expCsv" type="button">Esporta palestra</button>
         <button class="btn" id="expRunCsv" type="button">Esporta corse</button>
+        <button class="btn" id="expJollyCsv" type="button">Esporta Day Jolly</button>
       </div>
     </div>
     <div class="block" id="preBlock" hidden>
@@ -488,6 +608,12 @@ body.has-timer{padding-bottom:96px}
 
   <footer style="text-align:center;font-size:11px;color:var(--ink-2);margin-top:28px">Scheda personale · v2 · dati salvati solo su questo dispositivo</footer>
 </main>
+
+<div class="cx" id="cx" hidden role="dialog" aria-modal="true" aria-label="Circuito guidato Day Jolly">
+  <div class="cx-top"><div class="cx-set" id="cxSet"></div><div class="cx-dots" id="cxDots"></div><button type="button" class="cx-x" data-cx="close" aria-label="Interrompi il circuito">✕</button></div>
+  <div class="cx-body" id="cxBody"></div>
+  <div class="cx-ctrl" id="cxCtrl"><button type="button" class="cx-b" data-cx="pause" id="cxPause">Pausa</button><button type="button" class="cx-b" data-cx="skip">Salta fase ⏭</button></div>
+</div>
 
 <script>
 "use strict";
@@ -558,7 +684,18 @@ assistedPullUp: '<svg viewBox="0 0 180 180" role="img" aria-label="Trazioni assi
 
 wallCurl: '<svg viewBox="0 0 180 180" role="img" aria-label="Curl con manubri schiena al muro"><path class="eq" d="M42 12 V168"/><path class="cbl" d="M42 30 L30 20 M42 62 L30 52 M42 94 L30 84 M42 126 L30 116 M42 158 L30 148"/><circle class="h" cx="62" cy="40" r="10"/><path class="b" d="M58 50 L58 110"/><path class="b" d="M58 62 L62 90 L68 118"/><path class="b" d="M58 66 L64 94 L72 120"/><path class="eq" d="M54 124 H92"/><path class="eqf" d="M50 116 h7 v16 h-7z"/><path class="eqf" d="M89 116 h7 v16 h-7z"/><path class="b" d="M58 110 L68 140 L74 168"/><path class="b" d="M58 110 L52 140 L54 168"/><path class="arw" d="M108 128 Q104 92 88 80"/></svg>',
 
-ezCurlWall: '<svg viewBox="0 0 180 180" role="img" aria-label="Curl con bilanciere EZ schiena al muro"><path class="eq" d="M42 12 V168"/><path class="cbl" d="M42 30 L30 20 M42 62 L30 52 M42 94 L30 84 M42 126 L30 116 M42 158 L30 148"/><circle class="h" cx="62" cy="40" r="10"/><path class="b" d="M58 50 L58 110"/><path class="b" d="M58 62 L62 90 L70 118"/><path class="b" d="M58 66 L66 94 L76 120"/><path class="eq" d="M56 124 q8 -8 16 0 q8 8 16 0 q8 -8 16 0"/><path class="b" d="M58 110 L68 140 L74 168"/><path class="b" d="M58 110 L52 140 L54 168"/><path class="arw" d="M116 128 Q110 92 94 82"/></svg>'
+ezCurlWall: '<svg viewBox="0 0 180 180" role="img" aria-label="Curl con bilanciere EZ schiena al muro"><path class="eq" d="M42 12 V168"/><path class="cbl" d="M42 30 L30 20 M42 62 L30 52 M42 94 L30 84 M42 126 L30 116 M42 158 L30 148"/><circle class="h" cx="62" cy="40" r="10"/><path class="b" d="M58 50 L58 110"/><path class="b" d="M58 62 L62 90 L70 118"/><path class="b" d="M58 66 L66 94 L76 120"/><path class="eq" d="M56 124 q8 -8 16 0 q8 8 16 0 q8 -8 16 0"/><path class="b" d="M58 110 L68 140 L74 168"/><path class="b" d="M58 110 L52 140 L54 168"/><path class="arw" d="M116 128 Q110 92 94 82"/></svg>',
+
+jjack: '<svg viewBox="0 0 180 180" role="img" aria-label="Jumping jack"><path class="eq" d="M28 168 H152"/><circle class="h" cx="90" cy="34" r="11"/><path class="b" d="M90 45 V54"/><path class="b" d="M72 58 H108"/><path class="b" d="M90 54 V104"/><path class="b" d="M78 104 H102"/><path class="b" d="M72 58 L56 40 L48 18"/><path class="b" d="M108 58 L124 40 L132 18"/><path class="b" d="M78 104 L64 136 L54 166"/><path class="b" d="M102 104 L116 136 L126 166"/><path class="arw" d="M34 40 Q22 80 40 112"/><path class="arw" d="M146 40 Q158 80 140 112"/></svg>',
+
+plank: '<svg viewBox="0 0 180 180" role="img" aria-label="Plank"><path class="eq" d="M14 160 H166"/><path class="cbl" d="M28 98 L166 148" stroke-dasharray="4 5"/><circle class="h" cx="36" cy="106" r="10"/><path class="b" d="M48 114 L104 135 L156 154"/><path class="b" d="M50 116 L50 156 L26 158"/></svg>',
+
+pushup: '<svg viewBox="0 0 180 180" role="img" aria-label="Push up"><path class="eq" d="M14 160 H166"/><circle class="h" cx="38" cy="88" r="10"/><path class="b" d="M50 96 L104 122 L156 154"/><path class="b" d="M52 98 L50 128 L50 158"/><path class="arw" d="M24 104 V146"/></svg>',
+
+vup: '<svg viewBox="0 0 180 180" role="img" aria-label="V-up"><path class="eq" d="M14 160 H166"/><circle class="h" cx="50" cy="80" r="10"/><path class="b" d="M90 154 L58 94"/><path class="b" d="M90 154 L146 88"/><path class="b" d="M60 98 L98 76 L128 72"/><path class="arw" d="M28 142 Q30 110 44 96"/><path class="arw" d="M166 142 Q164 114 154 100"/></svg>',
+
+burpee: '<svg viewBox="0 0 180 180" role="img" aria-label="Burpees"><path class="eq" d="M14 166 H166"/><circle class="eq" cx="26" cy="146" r="6"/><path class="eq" d="M32 150 L84 158 L120 164"/><path class="eq" d="M34 152 V166"/><circle class="h" cx="128" cy="28" r="10"/><path class="b" d="M128 38 V80"/><path class="b" d="M114 48 H142"/><path class="b" d="M114 48 L108 28 L112 10"/><path class="b" d="M142 48 L148 28 L144 10"/><path class="b" d="M128 80 L120 104 L124 128"/><path class="b" d="M128 80 L136 104 L132 128"/><path class="arw" d="M76 140 Q88 100 110 80"/></svg>'
+
 };
 
 /* ============================================================
@@ -566,6 +703,101 @@ ezCurlWall: '<svg viewBox="0 0 180 180" role="img" aria-label="Curl con bilancie
       sets = numero di serie (campi peso), rps = ripetizioni per serie (numero o array),
       unit = unità del campo (default kg), vol:false = escluso dai kg sollevati
    ============================================================ */
+/* ============================================================
+   2b. DAY JOLLY  —  circuito a corpo libero a casa
+       work/rest in secondi · count:false = esercizio a tempo, senza ripetizioni
+       minSets = set minimi · setRest = recupero tra un set e l'altro (secondi)
+   ============================================================ */
+var JOLLY = {
+  id: "jolly",
+  tab: "Day Jolly",
+  focus: "Corpo libero a casa",
+  minSets: 4,
+  setRest: 180,
+  prep: 10,
+  steps: [
+    { id:"jj", name:"Jumping jack", short:"JJ", work:40, rest:20, count:true, fig:"jjack",
+      tip:"Ritmo costante, atterraggio morbido sugli avampiedi. Ogni apertura + chiusura vale una ripetizione." },
+    { id:"pk", name:"Plank", short:"Plank", work:40, rest:20, count:false, fig:"plank",
+      tip:"Gomiti sotto le spalle, glutei e addome contratti, corpo in linea: niente bacino alto né lombare che cede." },
+    { id:"pu", name:"Push up", short:"Push up", work:40, rest:20, count:true, fig:"pushup",
+      tip:"Petto vicino a terra, gomiti a ~45° dal busto. Se cedi, continua sulle ginocchia e annotalo." },
+    { id:"vu", name:"V-up", short:"V-up", work:40, rest:20, count:true, fig:"vup",
+      tip:"Gambe e busto salgono insieme, mani verso le punte dei piedi. Scendi controllato senza appoggiarti del tutto." },
+    { id:"bp", name:"Burpees", short:"Burpees", work:60, rest:0, count:true, fig:"burpee",
+      tip:"Squat, piedi indietro in plank, petto a terra, ritorno e salto. Meglio un ritmo che regge tutto il minuto." }
+  ]
+};
+
+/* ============================================================
+   2c. FRASI MOTIVAZIONALI — una al giorno, a rotazione senza ripetizioni
+       t = testo · a = autore (facoltativo). Aggiungi o togli liberamente.
+   ============================================================ */
+var QUOTES = [
+  { t:"Non è perché le cose sono difficili che non osiamo; è perché non osiamo che sono difficili.", a:"Seneca" },
+  { t:"Mentre si rimanda, la vita passa.", a:"Seneca" },
+  { t:"Nessun vento è favorevole per chi non sa dove andare.", a:"Seneca" },
+  { t:"Non c'è una via facile dalla terra alle stelle.", a:"Seneca" },
+  { t:"Soffriamo più spesso nell'immaginazione che nella realtà.", a:"Seneca" },
+  { t:"Non perdere altro tempo a discutere su come dovrebbe essere un uomo buono: sii uno.", a:"Marco Aurelio" },
+  { t:"L'ostacolo all'azione fa avanzare l'azione. Ciò che sta sulla via diventa la via.", a:"Marco Aurelio" },
+  { t:"Nessuna grande cosa nasce all'improvviso.", a:"Epitteto" },
+  { t:"Prima di' a te stesso chi vuoi essere, poi fai ciò che devi fare.", a:"Epitteto" },
+  { t:"Sopporta e resisti: un giorno questo dolore ti sarà utile.", a:"Ovidio" },
+  { t:"La goccia scava la pietra.", a:"Ovidio" },
+  { t:"Possono, perché credono di potere.", a:"Virgilio" },
+  { t:"Chi ha cominciato è a metà dell'opera.", a:"Orazio" },
+  { t:"Cogli il giorno, confidando il meno possibile nel domani.", a:"Orazio" },
+  { t:"Mens sana in corpore sano.", a:"Giovenale" },
+  { t:"Fatti non foste a viver come bruti, ma per seguir virtute e canoscenza.", a:"Dante Alighieri" },
+  { t:"Un viaggio di mille miglia comincia con un passo.", a:"Laozi" },
+  { t:"Chi va piano va sano e va lontano.", a:"Proverbio" },
+  { t:"Volere è potere.", a:"Proverbio" },
+  { t:"Il giorno più difficile è quello in cui non inizi." },
+  { t:"Non devi avere voglia: devi solo cominciare. La voglia arriva al secondo set." },
+  { t:"La costanza batte l'intensità, settimana dopo settimana." },
+  { t:"Ogni serie registrata è una promessa mantenuta con te stesso." },
+  { t:"Mezz'ora oggi vale più di due ore \"domani\"." },
+  { t:"Non serve essere al massimo: serve esserci." },
+  { t:"Il progresso è silenzioso. I numeri, però, lo vedono." },
+  { t:"Più pesante del bilanciere c'è solo la scusa per non sollevarlo." },
+  { t:"Allenarsi stanchi è normale. Smettere di allenarsi è una scelta." },
+  { t:"Un chilo in più, una ripetizione in più: così si costruisce tutto." },
+  { t:"La motivazione ti fa partire, l'abitudine ti fa arrivare." },
+  { t:"Oggi fai quello che il te di tra tre mesi ti ringrazierà di aver fatto." },
+  { t:"Il recupero fa parte dell'allenamento. La pigrizia no." },
+  { t:"Il sudore di oggi è la forza di domani." },
+  { t:"Ogni burpee finito è una piccola vittoria." },
+  { t:"Corri al tuo passo: l'importante è non fermarsi." },
+  { t:"Le gambe si allenano, la testa si abitua." },
+  { t:"Un allenamento fatto così così è sempre meglio di uno saltato." },
+  { t:"Fai oggi la serie che ieri ti sembrava impossibile." },
+  { t:"Lo specchio può mentire. I carichi no." },
+  { t:"Non aspettare il lunedì: anche il giovedì è un ottimo inizio." },
+  { t:"Il primo chilometro è sempre il più lungo. Poi è il passo a portarti." },
+  { t:"Forza non è non fermarsi mai: è riprendere il ritmo dopo ogni pausa." },
+  { t:"Tre allenamenti a settimana, cinquantadue settimane l'anno: il segreto è tutto qui." },
+  { t:"Le scuse non bruciano calorie." },
+  { t:"Il plank dura quaranta secondi. La soddisfazione, tutto il giorno." },
+  { t:"Ascolta il corpo, ma non lasciare che a decidere sia la pigrizia." },
+  { t:"Ogni volta che inizi un allenamento hai già battuto la voglia di rimandare." },
+  { t:"Piccoli passi, ogni giorno, nella stessa direzione." },
+  { t:"La fatica passa. Il risultato resta." },
+  { t:"Più forte di ieri: è l'unico confronto che conta." },
+  { t:"Se è difficile, stai crescendo." },
+  { t:"Non è la velocità a fare il corridore, è la continuità." },
+  { t:"La serie peggiore è quella che non hai fatto." },
+  { t:"L'energia non si trova: si crea muovendosi." },
+  { t:"Oggi non serve un record. Serve un allenamento." },
+  { t:"La forza si costruisce un'abitudine alla volta." },
+  { t:"Hai già fatto la parte più difficile: decidere di allenarti." },
+  { t:"Respira, concentrati, spingi." },
+  { t:"Chi si allena con costanza non ha bisogno di fortuna." },
+  { t:"Il tuo unico avversario è la versione di te che vuole rimandare." },
+  { t:"Un buon allenamento comincia allacciandosi le scarpe." },
+  { t:"Muoversi è un privilegio: usalo." }
+];
+
 var PROGRAM = [
 {
   id: "d1",
@@ -753,7 +985,7 @@ var PROGRAM = [
   var KEY = "palestra-log-v1", PRE = KEY + "-backup-v1";
   var $  = function(s){ return document.querySelector(s); };
   var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  var store = { v:2, sessions:{}, runs:[], meta:{} }, canStore = true;
+  var store = { v:2, sessions:{}, runs:[], meta:{}, jolly:{} }, canStore = true;
   var DAY = {}; PROGRAM.forEach(function(d){ DAY[d.id] = d; });
   var curPage = "", curDay = PROGRAM[0], curDate = "", cur = { ex:{}, note:"" };
   var saveTimer = null, editRun = null;
@@ -827,6 +1059,14 @@ var PROGRAM = [
       return { id: r.id || ("r" + Math.random().toString(36).slice(2,10)), date: r.date,
                sec: +r.sec || 0, km: +r.km || 0, hr: r.hr ? +r.hr : null, note: r.note || "" };
     });
+    var jo = o.jolly && typeof o.jolly === "object" && !Array.isArray(o.jolly) ? o.jolly : {};
+    Object.keys(jo).forEach(function(d){
+      var s = jo[d] || {};
+      s.sets = Array.isArray(s.sets) ? s.sets.map(function(st){ var x = {}; st = st || {}; Object.keys(st).forEach(function(k){ x[k] = st[k] == null ? "" : String(st[k]); }); return x; }) : [];
+      s.note = s.note || "";
+      jo[d] = s;
+    });
+    o.jolly = jo;
     o.meta = o.meta && typeof o.meta === "object" ? o.meta : {};
     o.v = 2;
     return o;
@@ -897,6 +1137,8 @@ var PROGRAM = [
 
   /* ---------- drawer & navigazione ---------- */
   var ICO = {
+    jolly:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>',
+    play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>',
     ana:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M7 16v-4M12 16V6M17 16v-7"/></svg>',
     tmr:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 2M9.5 2.5h5"/></svg>',
     home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg>',
@@ -915,6 +1157,8 @@ var PROGRAM = [
       var ld = lastDate(d.id);
       h += navLink(d.id, "D" + (i+1), d.tab, esc(d.focus) + " · " + (ld ? "ultima " + fmt(ld) : "mai eseguito"));
     });
+    var jl = jLast();
+    h += navLink("jolly", ICO.jolly, JOLLY.tab, esc(JOLLY.focus) + " · " + (jl ? "ultima " + fmt(jl) : "mai eseguito"));
     var rs = runsSorted();
     h += '<div class="nav-label">Cardio</div>';
     h += navLink("run", ICO.run, "Corsa", rs.length ? rs.length + " corse · ultima " + fmt(rs[0].date) : "Nessuna corsa registrata", "run");
@@ -957,8 +1201,9 @@ var PROGRAM = [
 
   function route(){
     var p = (location.hash || "").replace("#", "") || "home";
-    if(!(p === "home" || p === "run" || p === "data" || p === "analisi" || DAY[p])) p = "home";
+    if(!(p === "home" || p === "run" || p === "data" || p === "analisi" || p === "jolly" || DAY[p])) p = "home";
     if(saveTimer){ clearTimeout(saveTimer); commit(); }
+    if(jTimer) jCommit();
     curPage = p;
     $$(".page").forEach(function(el){ el.classList.remove("on"); });
     var isDay = !!DAY[p];
@@ -979,6 +1224,7 @@ var PROGRAM = [
       if(p === "run"){ renderRun(); setTb("Cardio", "Corsa"); }
       if(p === "data"){ renderData(); setTb("Gestione", "Dati e backup"); }
       if(p === "analisi"){ renderAna(); setTb("Performance", "Analisi"); }
+      if(p === "jolly"){ if(!CX.on) jLoad(jGoDate || todayISO()); jGoDate = ""; renderJolly(); setTb("Casa", JOLLY.tab); }
     }
     renderNav();
     drawerOpen(false);
@@ -991,13 +1237,14 @@ var PROGRAM = [
      HOME
      ============================================================ */
   function agg(from, to){
-    var r = { gym:0, run:0, vol:0, sec:0, km:0 };
+    var r = { gym:0, home:0, reps:0, run:0, vol:0, sec:0, km:0 };
     PROGRAM.forEach(function(d){
       var ds = daySessions(d.id);
       Object.keys(ds).forEach(function(k){
         if(k >= from && k <= to && hasData(ds[k])){ r.gym++; r.vol += sessVol(d, ds[k]); }
       });
     });
+    Object.keys(store.jolly || {}).forEach(function(k){ if(k >= from && k <= to && jHas(store.jolly[k])){ r.home++; r.reps += jTot(store.jolly[k]); } });
     store.runs.forEach(function(x){ if(x.date >= from && x.date <= to){ r.run++; r.sec += x.sec || 0; r.km += x.km || 0; } });
     return r;
   }
@@ -1016,8 +1263,8 @@ var PROGRAM = [
       return '<div class="kpi"><div class="k">' + k + '</div><div class="v">' + v + (unit ? '<small>' + unit + '</small>' : '') + '</div>'
         + '<div class="s">' + d + '<span>' + sub + '</span></div></div>';
     }
-    return tile("Allenamenti", c.gym + c.run, "", delta(c.gym + c.run, p.gym + p.run, "abs"),
-                c.gym + " palestra · " + c.run + " corsa")
+    return tile("Allenamenti", c.gym + c.home + c.run, "", delta(c.gym + c.home + c.run, p.gym + p.home + p.run, "abs"),
+                c.gym + " palestra · " + c.home + " casa · " + c.run + " corsa")
       + tile("Kg sollevati", nf(c.vol), "kg", delta(c.vol, p.vol), "vs " + nf(p.vol) + " " + lbl)
       + tile("Minuti di corsa", nf(c.sec / 60), "min", delta(c.sec, p.sec), "vs " + nf(p.sec / 60) + " " + lbl)
       + tile("Km corsi", nf(c.km, 1), "km", delta(c.km, p.km), "vs " + nf(p.km, 1) + " " + lbl);
@@ -1031,43 +1278,62 @@ var PROGRAM = [
     if(lastG){ var ix = cyc.indexOf(lastG.day.id); if(ix > -1) next = DAY[cyc[(ix + 1) % cyc.length]]; }
     var lastRun = runsSorted()[0] || null;
 
-    var hello;
-    if(!lastG && !lastRun) hello = "Benvenuto. Parti dal <b>" + next.tab + "</b>: da qui in poi trovi riepilogo, prossimo allenamento e confronti settimanali.";
-    else if(lastG && lastG.date === tIso) hello = "Seduta di oggi registrata: <b>" + lastG.day.tab + "</b>. Il prossimo allenamento sarà il <b>" + next.tab + "</b>.";
-    else if(lastG) hello = "Ultimo allenamento <b>" + daysAgo(lastG.date) + "</b>. Oggi tocca al <b>" + next.tab + "</b>.";
-    else hello = "Nessuna seduta in palestra ancora registrata: parti dal <b>" + next.tab + "</b>.";
+    /* ultima attività in assoluto: palestra, Day Jolly o corsa */
+    var ljd = jLast(), acts = [], todayActs = [];
+    if(lastG) acts.push({ date:lastG.date, lbl:lastG.day.tab });
+    if(ljd) acts.push({ date:ljd, lbl:JOLLY.tab });
+    if(lastRun) acts.push({ date:lastRun.date, lbl:"corsa" });
+    acts.sort(function(a, b){ return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+    PROGRAM.forEach(function(d){ if(hasData(daySessions(d.id)[tIso])) todayActs.push(d.tab); });
+    if(ljd === tIso) todayActs.push(JOLLY.tab);
+    if(store.runs.some(function(r){ return r.date === tIso; })) todayActs.push("corsa");
 
+    var hello;
+    if(!acts.length) hello = "Benvenuto. Si parte dal <b>" + next.tab + "</b>: da qui in poi trovi consigli, riepilogo e confronti settimanali.";
+    else if(todayActs.length) hello = "Oggi hai già fatto: <b>" + todayActs.join(", ") + "</b>. Ottimo lavoro: il prossimo in palestra sarà il <b>" + next.tab + "</b>.";
+    else {
+      var gap = daysSince(acts[0].date);
+      hello = "Ultimo allenamento " + daysAgo(acts[0].date) + " (" + acts[0].lbl + ")"
+        + (gap >= 4 ? ": è il momento giusto per ripartire." : ".") + " Il consigliato di oggi è il <b>" + next.tab + "</b>.";
+    }
+
+    var q = quoteOfDay();
     var h = '<header class="ph"><div class="kicker">' + fmtLong(tIso) + '</div>'
-      + '<h1>Ciao ' + esc(CONFIG.name) + '</h1><p class="sub">' + hello + '</p></header>';
+      + '<h1>Ciao ' + esc(CONFIG.name) + '</h1>'
+      + (q.t ? '<figure class="quote"><blockquote>' + esc(q.t) + '</blockquote>' + (q.a ? '<figcaption>' + esc(q.a) + '</figcaption>' : '') + '</figure>' : '')
+      + '<p class="sub">' + hello + '</p>' + weekPulse() + '</header>';
 
     h += backupNag();
 
-    /* tiles ultimo / prossimo */
-    h += '<div class="hero">';
+    /* cosa facciamo oggi */
+    h += '<div class="h2row"><h2>Cosa facciamo oggi?</h2><span>'
+      + (lastG ? 'consigliato il giorno successivo all\'ultimo fatto (' + lastG.day.tab + ')' : 'si parte dal ' + next.tab) + '</span></div>'
+      + '<div class="pick">' + pickOptions(next, tIso) + '</div>';
+
+    /* ultime attività */
+    var tiles = "";
     if(lastG){
       var s = daySessions(lastG.day.id)[lastG.date], vol = sessVol(lastG.day, s);
-      h += '<div class="tile"><div class="lbl">Ultimo allenamento</div>'
+      tiles += '<div class="tile solo"><div class="lbl">Ultimo allenamento in palestra</div>'
         + '<div class="big">' + lastG.day.tab + '</div><div class="focus">' + esc(lastG.day.focus) + '</div>'
-        + '<div class="meta">' + fmtLong(lastG.date) + ' · ' + daysAgo(lastG.date)
-        + (vol ? ' · <b>' + nf(vol) + ' kg</b> sollevati' : '') + '</div>'
+        + '<div class="meta">' + fmtLong(lastG.date) + ' · ' + daysAgo(lastG.date) + (vol ? ' · <b>' + nf(vol) + ' kg</b> sollevati' : '') + '</div>'
         + '<div class="groups">' + lastG.day.groups.map(function(g){ return '<span>' + esc(g.name) + '</span>'; }).join("") + '</div>'
         + '<a class="go ghost" href="#' + lastG.day.id + '" data-goday="' + lastG.day.id + '" data-date="' + lastG.date + '">Rivedi la seduta</a></div>';
-    } else {
-      h += '<div class="tile"><div class="lbl">Ultimo allenamento</div><div class="big">—</div>'
-        + '<div class="meta" style="margin-top:6px">Nessuna seduta registrata in palestra.</div></div>';
     }
-    var nld = lastDate(next.id), nItems = itemsOf(next).length;
-    h += '<div class="tile next"><div class="lbl">Prossimo allenamento</div>'
-      + '<div class="big">' + next.tab + '</div><div class="focus">' + esc(next.focus) + '</div>'
-      + '<div class="meta"><b>' + nItems + ' esercizi</b> · ' + (nld ? "eseguito l'ultima volta " + daysAgo(nld) : "mai eseguito") + '</div>'
-      + '<a class="go" href="#' + next.id + '" data-goday="' + next.id + '" data-date="' + tIso + '">Inizia oggi →</a></div>';
     if(lastRun){
-      h += '<div class="tile run"><div class="lbl" style="color:var(--teal)">Ultima corsa</div>'
+      tiles += '<div class="tile run"><div class="lbl" style="color:var(--teal)">Ultima corsa</div>'
         + '<div class="meta"><b>' + nf(lastRun.km, 2) + ' km</b> in <b>' + fmtDur(lastRun.sec) + '</b> · ' + paceOf(lastRun.sec, lastRun.km)
         + (lastRun.hr ? ' · ' + lastRun.hr + ' bpm' : '') + ' · ' + fmtLong(lastRun.date) + '</div>'
         + '<a class="btn mini" href="#run" style="margin-left:auto">Corsa →</a></div>';
     }
-    h += '</div>';
+    if(ljd){
+      var sj = store.jolly[ljd];
+      tiles += '<div class="tile run"><div class="lbl" style="color:var(--warn)">Ultimo Day Jolly</div>'
+        + '<div class="meta"><b>' + jDone(sj) + ' set</b> · <b>' + nf(jTot(sj)) + ' ripetizioni</b> · ' + nf(jPerSet(sj), 1) + ' per set · ' + fmtLong(ljd) + '</div>'
+        + '<a class="btn mini" href="#jolly" style="margin-left:auto">Day Jolly →</a></div>';
+    }
+    if(tiles) h += '<div class="h2row"><h2>Ultime attività</h2></div><div class="hero">' + tiles + '</div>';
+
 
     /* settimana corrente */
     var sow = addDays(t, -((t.getDay() + 6) % 7));
@@ -1077,6 +1343,7 @@ var PROGRAM = [
     for(var i = 0; i < 7; i++){
       var d = addDays(sow, i), di = iso(d), pills = "";
       PROGRAM.forEach(function(day, k){ var ss = daySessions(day.id)[di]; if(hasData(ss)) pills += '<span class="pill">D' + (k+1) + '</span>'; });
+      if(jHas((store.jolly || {})[di])) pills += '<span class="pill j">DJ</span>';
       store.runs.forEach(function(r){ if(r.date === di) pills += '<span class="pill r">RUN</span>'; });
       h += '<div class="d' + (di === tIso ? " today" : "") + (di > tIso ? " future" : "") + '">'
         + '<div class="wd">' + WD[d.getDay()] + '</div><div class="dn">' + d.getDate() + '</div>' + pills + '</div>';
@@ -1361,7 +1628,7 @@ var PROGRAM = [
   function dMsg(t, err){ var m = $("#dMsg"); m.textContent = t; m.className = "msg" + (err ? " err" : ""); }
   function renderData(){
     var n = 0; PROGRAM.forEach(function(d){ n += datesOf(d.id).length; });
-    $("#dStats").textContent = n + " sedute in palestra e " + store.runs.length + " corse salvate" + (canStore ? "." : " — storage non disponibile, esporta subito.");
+    $("#dStats").textContent = n + " sedute in palestra, " + jDates().length + " Day Jolly e " + store.runs.length + " corse salvate" + (canStore ? "." : " — storage non disponibile, esporta subito.");
     $("#dStats").textContent += " " + backupLine();
     $("#csvDay").innerHTML = PROGRAM.map(function(d){ return '<option value="' + d.id + '">' + d.tab + ' · ' + esc(d.focus) + '</option>'; }).join("");
     var pre = null; try { pre = localStorage.getItem(PRE); } catch(e){}
@@ -1395,8 +1662,9 @@ var PROGRAM = [
           if(ix > -1) store.runs[ix] = run; else store.runs.push(run);
           nr++;
         });
+        var nj = 0; Object.keys(o.jolly || {}).forEach(function(d){ store.jolly[d] = o.jolly[d]; nj++; });
         persist(); renderData(); renderNav();
-        dMsg("Importate " + ns + " sedute e " + nr + " corse");
+        dMsg("Importate " + ns + " sedute, " + nj + " Day Jolly e " + nr + " corse");
       } catch(e){ dMsg("File non valido", true); }
     };
     r.readAsText(f); this.value = "";
@@ -1432,7 +1700,7 @@ var PROGRAM = [
   /* ============================================================
      BACKUP — promemoria in Home
      ============================================================ */
-  function hasAnyData(){ var n = store.runs.length; PROGRAM.forEach(function(d){ n += datesOf(d.id).length; }); return n > 0; }
+  function hasAnyData(){ var n = store.runs.length + jDates().length; PROGRAM.forEach(function(d){ n += datesOf(d.id).length; }); return n > 0; }
   function daysSince(s){ return s ? Math.round((today() - parseIso(s)) / 86400000) : null; }
   function backupLine(){
     var lb = store.meta && store.meta.lastBackup;
@@ -1453,7 +1721,7 @@ var PROGRAM = [
     if(m.snooze && m.snooze > t) return "";
     var ds = daysSince(m.lastBackup);
     if(ds !== null && ds < CONFIG.backupDays) return "";
-    var n = 0; PROGRAM.forEach(function(d){ n += datesOf(d.id).length; });
+    var n = 0; PROGRAM.forEach(function(d){ n += datesOf(d.id).length; }); n += jDates().length;
     return '<div class="nag" role="status"><div class="nag-t"><b>'
       + (ds === null ? "Nessun backup registrato" : "Ultimo backup " + ds + " giorni fa") + '</b>'
       + '<span>' + n + (n === 1 ? ' seduta' : ' sedute') + ' e ' + store.runs.length + (store.runs.length === 1 ? ' corsa' : ' corse')
@@ -1587,7 +1855,7 @@ var PROGRAM = [
     var t = today(), out = [], ws = parseIso(from);
     while(ws <= t){
       var a = agg(iso(ws), iso(addDays(ws, 6)));
-      out.push({ ws:iso(ws), gym:a.gym, run:a.run, vol:a.vol, km:a.km });
+      out.push({ ws:iso(ws), gym:a.gym, home:a.home, run:a.run, vol:a.vol, km:a.km });
       ws = addDays(ws, 7);
     }
     return out;
@@ -1596,7 +1864,7 @@ var PROGRAM = [
     var ws = weekOf(today()), n = 0;
     for(var k = 0; k < 104; k++){
       var a = agg(iso(ws), iso(addDays(ws, 6)));
-      if(a.gym + a.run > 0) n++;
+      if(a.gym + a.home + a.run > 0) n++;
       else if(k > 0) break;          // la settimana in corso vuota non interrompe la serie
       ws = addDays(ws, -7);
     }
@@ -1628,6 +1896,7 @@ var PROGRAM = [
     var lastAny = null;
     PROGRAM.forEach(function(d){ var l = lastDate(d.id); if(l && (!lastAny || l > lastAny)) lastAny = l; });
     var lr = runsSorted()[0]; if(lr && (!lastAny || lr.date > lastAny)) lastAny = lr.date;
+    var lj = jLast(); if(lj && (!lastAny || lj > lastAny)) lastAny = lj;
     if(lastAny){
       var idle = daysSince(lastAny);
       if(idle >= 5) add("warn", 95, "Nessun allenamento da " + idle + " giorni",
@@ -1635,7 +1904,7 @@ var PROGRAM = [
     }
 
     /* obiettivo settimanale e costanza */
-    var wIdx = (td.getDay() + 6) % 7, wk = agg(iso(weekOf(td)), t), tot = wk.gym + wk.run;
+    var wIdx = (td.getDay() + 6) % 7, wk = agg(iso(weekOf(td)), t), tot = wk.gym + wk.home + wk.run;
     if(tot >= CONFIG.target) add("pos", 60, "Obiettivo settimanale raggiunto", tot + " allenamenti su " + CONFIG.target + " previsti questa settimana.");
     else if(lastAny) add("info", 50, tot + " allenamenti su " + CONFIG.target + " questa settimana",
       (CONFIG.target - tot === 1 ? "Ne manca 1" : "Ne mancano " + (CONFIG.target - tot)) + " per l'obiettivo, con " + (7 - wIdx) + (7 - wIdx === 1 ? " giorno" : " giorni") + " a disposizione (oggi compreso).");
@@ -1701,6 +1970,18 @@ var PROGRAM = [
         nf(e1, 2) + " m per battito contro " + nf(e0, 2) + " delle corse precedenti: stanchezza, caldo o ritmi più alti possono spiegarlo.");
     }
 
+    /* Day Jolly: ripetizioni medie per set nel periodo */
+    var jd = jDates().filter(function(d){ return d >= from && d <= to; });
+    if(jd.length >= 2){
+      var j0 = jPerSet(store.jolly[jd[0]]), j1 = jPerSet(store.jolly[jd[jd.length - 1]]);
+      if(j0 > 0){
+        var jp = (j1 - j0) / j0 * 100;
+        if(jp >= 5) add("pos", 53, "Day Jolly +" + nf(jp) + "% ripetizioni per set",
+          "Da " + nf(j0, 1) + " a " + nf(j1, 1) + " ripetizioni medie per set (" + fmt(jd[0]) + " → " + fmt(jd[jd.length - 1]) + ").");
+        else if(jp <= -10) add("info", 37, "Day Jolly: ripetizioni per set in calo",
+          nf(j1, 1) + " contro " + nf(j0, 1) + " della prima seduta del periodo: verifica recupero e ritmo sui burpees.");
+      }
+    }
     out.sort(function(a, b){ return b.prio - a.prio; });
     return out;
   }
@@ -1740,7 +2021,7 @@ var PROGRAM = [
   }
   function weekChart(weeks){
     var W = 640, H = 200, L = 30, R = 12, T = 14, B = 26, n = weeks.length;
-    var mx = Math.max(CONFIG.target + 1, Math.max.apply(null, weeks.map(function(w){ return w.gym + w.run; })));
+    var mx = Math.max(CONFIG.target + 1, Math.max.apply(null, weeks.map(function(w){ return w.gym + w.home + w.run; })));
     var bw = (W - L - R) / n, step = Math.ceil(n / 6);
     function Y(v){ return H - B - v / mx * (H - T - B); }
     var g = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="chart" role="img" aria-label="Allenamenti per settimana">';
@@ -1750,9 +2031,10 @@ var PROGRAM = [
         + '<text x="' + (L - 7) + '" y="' + (Y(v) + 4).toFixed(1) + '" class="ax" text-anchor="end">' + v + '</text>';
     }
     weeks.forEach(function(w, i){
-      var x = L + i * bw + bw * 0.18, wi = bw * 0.64, yg = Y(w.gym), yr = Y(w.gym + w.run);
+      var x = L + i * bw + bw * 0.18, wi = bw * 0.64, yg = Y(w.gym), yh = Y(w.gym + w.home), yr = Y(w.gym + w.home + w.run);
       if(w.gym) g += '<rect class="bg" x="' + x.toFixed(1) + '" y="' + yg.toFixed(1) + '" width="' + wi.toFixed(1) + '" height="' + (H - B - yg).toFixed(1) + '" rx="3"><title>Sett. ' + fmt(w.ws) + ': ' + w.gym + ' palestra</title></rect>';
-      if(w.run) g += '<rect class="br" x="' + x.toFixed(1) + '" y="' + yr.toFixed(1) + '" width="' + wi.toFixed(1) + '" height="' + (yg - yr).toFixed(1) + '" rx="3"><title>Sett. ' + fmt(w.ws) + ': ' + w.run + ' corse</title></rect>';
+      if(w.home) g += '<rect class="bh" x="' + x.toFixed(1) + '" y="' + yh.toFixed(1) + '" width="' + wi.toFixed(1) + '" height="' + (yg - yh).toFixed(1) + '" rx="3"><title>Sett. ' + fmt(w.ws) + ': ' + w.home + ' casa</title></rect>';
+      if(w.run) g += '<rect class="br" x="' + x.toFixed(1) + '" y="' + yr.toFixed(1) + '" width="' + wi.toFixed(1) + '" height="' + (yh - yr).toFixed(1) + '" rx="3"><title>Sett. ' + fmt(w.ws) + ': ' + w.run + ' corse</title></rect>';
       if(i % step === 0){ var d = parseIso(w.ws); g += '<text x="' + (x + wi / 2).toFixed(1) + '" y="' + (H - 6) + '" class="ax" text-anchor="middle">' + d.getDate() + "/" + (d.getMonth() + 1) + '</text>'; }
     });
     var yt = Y(CONFIG.target).toFixed(1);
@@ -1774,7 +2056,7 @@ var PROGRAM = [
 
   function renderAna(){
     var to = todayISO(), from = anaFrom(), weeks = weeksData(from);
-    var tot = weeks.reduce(function(a, w){ a.g += w.gym; a.r += w.run; a.v += w.vol; return a; }, { g:0, r:0, v:0 });
+    var tot = weeks.reduce(function(a, w){ a.g += w.gym + w.home; a.r += w.run; a.v += w.vol; return a; }, { g:0, r:0, v:0 });
     var h = '<header class="ph"><div class="kicker">Performance</div><h1>Analisi</h1>'
       + '<p class="sub">Insight automatici, progressione dei carichi, costanza e bilanciamento, calcolati sui dati salvati su questo telefono.</p>'
       + '<div class="seg ana-range" role="group" aria-label="Periodo di analisi">'
@@ -1796,10 +2078,10 @@ var PROGRAM = [
       : '<div class="block"><p class="hint">Nessun segnale rilevante nel periodo: servono qualche seduta e corsa in più per confronti affidabili.</p></div>';
 
     /* costanza */
-    var nW = weeks.length, st = streak(), okW = weeks.filter(function(w){ return w.gym + w.run >= CONFIG.target; }).length;
+    var nW = weeks.length, st = streak(), okW = weeks.filter(function(w){ return w.gym + w.home + w.run >= CONFIG.target; }).length;
     h += '<div class="h2row"><h2>Costanza</h2><span>allenamenti per settimana, palestra e corsa</span></div><div class="block">'
       + weekChart(weeks)
-      + '<div class="legend-c"><span><i class="sw g"></i>Palestra</span><span><i class="sw r"></i>Corsa</span><span><i class="sw t"></i>Obiettivo ' + CONFIG.target + ' a settimana</span></div>'
+      + '<div class="legend-c"><span><i class="sw g"></i>Palestra</span><span><i class="sw h"></i>Casa</span><span><i class="sw r"></i>Corsa</span><span><i class="sw t"></i>Obiettivo ' + CONFIG.target + ' a settimana</span></div>'
       + '<div class="kpis mini">'
       +   miniK("Media settimanale", nf((tot.g + tot.r) / nW, 1), "allenamenti")
       +   miniK("Settimane a obiettivo", okW + "/" + nW, nW ? nf(okW / nW * 100) + "% del periodo" : "")
@@ -1863,6 +2145,27 @@ var PROGRAM = [
     } else h += '<p class="hint">Nessuna corsa nel periodo selezionato.</p>';
     h += '</div>';
 
+    /* Day Jolly */
+    var jd2 = jDates().filter(function(d){ return d >= from && d <= to; });
+    h += '<div class="h2row"><h2>Day Jolly</h2><span>ripetizioni medie per set · corpo libero</span></div><div class="block">';
+    if(jd2.length){
+      h += lineChart([{ cls:"s4", pts:jd2.map(function(d){ return { x:d, y:Math.round(jPerSet(store.jolly[d]) * 10) / 10 }; }) }], { label:"Day Jolly, ripetizioni per set", fy:function(v){ return nf(v); } });
+      var nS = 0, bestJ = jd2[0], holds = [];
+      jd2.forEach(function(d){ var s = store.jolly[d]; nS += jDone(s); if(jPerSet(s) > jPerSet(store.jolly[bestJ])) bestJ = d; var hh = jHold(s); if(hh !== null) holds.push(hh); });
+      var jF = store.jolly[jd2[0]], jL = store.jolly[jd2[jd2.length - 1]];
+      h += '<div class="kpis mini">'
+        +   miniK("Sedute", jd2.length, nS + " set in totale")
+        +   miniK("Media per set", nf(jPerSet(jL), 1), "ultima seduta", jd2.length >= 2 && jPerSet(jF) ? dPct((jPerSet(jL) - jPerSet(jF)) / jPerSet(jF) * 100) : "")
+        +   miniK("Seduta migliore", nf(jPerSet(store.jolly[bestJ]), 1), "per set · " + fmt(bestJ))
+        +   miniK("Tenuta media", holds.length ? nf(holds.reduce(function(a, b){ return a + b; }, 0) / holds.length) + '<small>%</small>' : "—", "ultimo set vs primo")
+        + '</div><div class="jex">' + J_COUNT.map(function(x){
+            var a = jDone(jF) ? jSum(jF, x.id) / jDone(jF) : 0, b = jDone(jL) ? jSum(jL, x.id) / jDone(jL) : 0;
+            return '<span><b>' + nf(b, 1) + '</b> ' + x.short + ' per set' + (jd2.length >= 2 && a ? ' ' + dPct((b - a) / a * 100) : '') + '</span>';
+          }).join("") + '</div>'
+        + '<p class="foot-note">Media per set = ripetizioni totali ÷ set completati: così sedute da 4 e da 5 set restano confrontabili. Tenuta = variazione tra il primo e l\'ultimo set della seduta; più è vicina a zero, meglio regge il ritmo.</p>';
+    } else h += '<p class="hint">Nessuna seduta Day Jolly nel periodo selezionato.</p>';
+    h += '</div>';
+
     $("#page-analisi").innerHTML = h;
     if(ANA.ex) $("#anaEx").value = ANA.ex;
     renderExChart();
@@ -1904,6 +2207,378 @@ var PROGRAM = [
     if(ev.target.id === "anaEx"){ ANA.ex = ev.target.value; renderExChart(); }
   });
 
+
+  /* ============================================================
+     DAY JOLLY — dati, pagina e circuito guidato
+     ============================================================ */
+  var jDate = "", jGoDate = "", jCur = { sets:[], note:"" }, jTimer = null;
+  var J_COUNT = JOLLY.steps.filter(function(s){ return s.count; });
+
+  function jEmptySet(){ var o = {}; J_COUNT.forEach(function(s){ o[s.id] = ""; }); return o; }
+  function jVal(st, id){ return st && st[id] != null ? String(st[id]).trim() : ""; }
+  function jSetHas(st){ return !!st && J_COUNT.some(function(s){ return jVal(st, s.id) !== ""; }); }
+  function jHas(s){ return !!s && (((s.sets || []).some(jSetHas)) || !!(s.note && s.note.trim())); }
+  function jDates(){ var j = store.jolly || {}; return Object.keys(j).filter(function(k){ return jHas(j[k]); }).sort(); }
+  function jLast(){ var d = jDates(); return d.length ? d[d.length - 1] : null; }
+  function jDone(s){ return ((s && s.sets) || []).filter(jSetHas).length; }
+  function jSum(s, id){ var t = 0; ((s && s.sets) || []).forEach(function(st){ var v = parseInt(jVal(st, id), 10); if(!isNaN(v)) t += v; }); return t; }
+  function jTot(s){ var t = 0; J_COUNT.forEach(function(x){ t += jSum(s, x.id); }); return t; }
+  function jSetTot(st){ var t = 0; J_COUNT.forEach(function(x){ var v = parseInt(jVal(st, x.id), 10); if(!isNaN(v)) t += v; }); return t; }
+  function jPerSet(s){ var n = jDone(s); return n ? jTot(s) / n : 0; }
+  function jPrevDate(date){ var d = jDates().filter(function(x){ return x < date; }); return d.length ? d[d.length - 1] : null; }
+  function jPrevOf(date){ var d = jPrevDate(date); return d ? store.jolly[d] : null; }
+  function jHold(s){
+    var st = ((s && s.sets) || []).filter(jSetHas); if(st.length < 2) return null;
+    var a = jSetTot(st[0]), b = jSetTot(st[st.length - 1]);
+    return a ? (b - a) / a * 100 : null;
+  }
+  function jSetSec(){ var t = 0; JOLLY.steps.forEach(function(s){ t += s.work + (s.rest || 0); }); return t; }
+  function jPlanSec(n){ return n * jSetSec() + (n - 1) * JOLLY.setRest; }
+
+  function jLoad(date){
+    jDate = date;
+    var s = (store.jolly || {})[date];
+    jCur = s ? JSON.parse(JSON.stringify(s)) : { sets:[], note:"" };
+    jCur.sets = jCur.sets || []; jCur.note = jCur.note || "";
+    while(jCur.sets.length < JOLLY.minSets) jCur.sets.push(jEmptySet());
+  }
+  function jCommit(){
+    clearTimeout(jTimer); jTimer = null;
+    if(!jDate) return;
+    store.jolly = store.jolly || {};
+    if(jHas(jCur)){
+      var c = JSON.parse(JSON.stringify(jCur));
+      while(c.sets.length && !jSetHas(c.sets[c.sets.length - 1])) c.sets.pop();   // righe vuote in coda non salvate
+      store.jolly[jDate] = c;
+    } else delete store.jolly[jDate];
+    persist();
+  }
+  function jQueue(){ clearTimeout(jTimer); jTimer = setTimeout(jCommit, 450); }
+  function jSetVal(i, id, v){
+    while(jCur.sets.length <= i) jCur.sets.push(jEmptySet());
+    jCur.sets[i][id] = String(v == null ? "" : v).replace(/\D/g, "").slice(0, 4);
+    jQueue();
+  }
+  function digits(el){ var c = el.value.replace(/\D/g, "").slice(0, 4); if(c !== el.value) el.value = c; return c; }
+
+  /* ---------- pagina ---------- */
+  function jSumHTML(){
+    var prevD = jPrevDate(jDate), prev = prevD ? store.jolly[prevD] : null;
+    var n = jDone(jCur), tot = jTot(jCur), ps = jPerSet(jCur), hold = jHold(jCur), cmp = !!(prev && n);
+    var lbl = prevD ? "vs " + fmt(prevD) : "";
+    var k = miniK("Set completati", n + '<small>/' + JOLLY.minSets + ' min</small>',
+              n >= JOLLY.minSets ? "minimo raggiunto" : (n ? "ne mancano " + (JOLLY.minSets - n) : "nessun set registrato"), cmp ? delta(n, jDone(prev), "abs") : "")
+      + miniK("Ripetizioni totali", nf(tot), lbl, cmp ? delta(tot, jTot(prev)) : "")
+      + miniK("Media per set", nf(ps, 1), lbl, cmp && jPerSet(prev) ? dPct((ps - jPerSet(prev)) / jPerSet(prev) * 100) : "")
+      + miniK("Tenuta", hold === null ? "—" : (hold > 0 ? "+" : "") + nf(hold) + '<small>%</small>', "ultimo set vs primo", "");
+    var row = '<div class="jex">' + J_COUNT.map(function(s){
+      var a = jSum(jCur, s.id), b = prev ? jSum(prev, s.id) : null;
+      return '<span><b>' + nf(a) + '</b> ' + s.short + (cmp && b !== null && (a || b) ? ' ' + delta(a, b, "abs") : '') + '</span>';
+    }).join("") + '</div>';
+    return '<div class="kpis mini">' + k + '</div>' + row;
+  }
+
+  function renderJolly(){
+    if(!jDate) jLoad(todayISO());
+    var prevD = jPrevDate(jDate), prev = prevD ? store.jolly[prevD] : null;
+    var h = '<header class="ph"><div class="kicker" style="color:var(--warn)">Casa · corpo libero</div><h1>' + JOLLY.tab + '</h1>'
+      + '<p class="sub">Circuito in superserie: ' + JOLLY.steps.length + ' esercizi per set, ' + Math.round(JOLLY.setRest / 60) + ' minuti di recupero tra un set e l\'altro, '
+      + '<b>minimo ' + JOLLY.minSets + ' set</b>. Registri le ripetizioni di ogni esercizio, tranne il plank che è a tempo.</p></header>';
+
+    h += '<div class="block jc"><div class="jc-top">'
+      + '<div class="fld f-jdate"><label for="jDate">Data</label><input type="date" id="jDate" value="' + jDate + '"></div>'
+      + '<div class="jc-dur"><b>' + Math.round(jSetSec() / 60) + ' min</b> a set · <b>~' + Math.round(jPlanSec(JOLLY.minSets) / 60) + ' min</b> per ' + JOLLY.minSets + ' set con i recuperi</div>'
+      + '<button type="button" class="btn solid big-go" id="cxStart">' + ICO.play + ' Avvia circuito guidato</button></div>'
+      + '<div class="jseq">' + JOLLY.steps.map(function(s, i){
+          return '<div class="jst pri"><div class="jst-fig">' + (FIGS[s.fig] || "") + '</div><div class="jst-t">'
+            + '<b>' + (i + 1) + '. ' + s.name + '</b>'
+            + '<span class="jst-tm">' + s.work + '" lavoro' + (s.rest ? ' · ' + s.rest + '" riposo' : ' · fine set') + (s.count ? '' : ' · a tempo') + '</span>'
+            + '<span class="jst-tip">' + s.tip + '</span></div></div>';
+        }).join("") + '</div></div>';
+
+    h += '<div class="h2row"><h2>Set della seduta</h2><span>' + fmtLong(jDate) + (prevD ? ' · in grigio i valori del ' + fmt(prevD) : '') + '</span></div>';
+    h += '<div class="block"><div class="scroller"><table class="jt"><thead><tr><th>Set</th>'
+      + J_COUNT.map(function(s){ return '<th>' + s.short + '</th>'; }).join("") + '<th>Tot.</th></tr></thead><tbody>';
+    jCur.sets.forEach(function(st, i){
+      var ps = prev && prev.sets && prev.sets[i];
+      h += '<tr><td>S' + (i + 1) + '</td>' + J_COUNT.map(function(s){
+          var pv = jVal(ps, s.id);
+          return '<td><input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" data-js="' + i + '" data-jk="' + s.id + '"'
+            + ' value="' + esc(jVal(st, s.id)) + '" placeholder="' + (pv ? esc(pv) : "—") + '" aria-label="Set ' + (i + 1) + ', ' + s.name + '"></td>';
+        }).join("") + '<td class="jt-tot" id="jRowTot' + i + '">' + (jSetHas(st) ? jSetTot(st) : "—") + '</td></tr>';
+    });
+    h += '</tbody><tfoot><tr><td>Totale</td>' + J_COUNT.map(function(s){ return '<td id="jColTot_' + s.id + '">' + jSum(jCur, s.id) + '</td>'; }).join("")
+      + '<td id="jAllTot">' + jTot(jCur) + '</td></tr></tfoot></table></div>'
+      + '<div class="tools"><button type="button" class="btn" id="jAdd">+ Aggiungi set</button>'
+      + (jCur.sets.length > JOLLY.minSets ? '<button type="button" class="btn" id="jDel">Rimuovi ultimo set</button>' : '')
+      + '</div></div>';
+
+    h += '<div class="h2row"><h2>Riepilogo</h2><span>' + (prevD ? 'confronto con la seduta del ' + fmt(prevD) : 'prima seduta registrata') + '</span></div>'
+      + '<div id="jSum">' + jSumHTML() + '</div>';
+    h += '<div class="block"><h2>Note della seduta</h2><textarea id="jNote" placeholder="Sensazioni, push up sulle ginocchia, varianti...">' + esc(jCur.note) + '</textarea></div>';
+
+    var ds = jDates().slice().reverse();
+    h += '<div class="block"><h2>Storico <span class="cnt">' + ds.length + (ds.length === 1 ? ' seduta' : ' sedute') + '</span></h2>';
+    if(ds.length){
+      h += '<div class="scroller"><table class="jt jh"><thead><tr><th>Data</th><th>Set</th>' + J_COUNT.map(function(s){ return '<th>' + s.short + '</th>'; }).join("")
+        + '<th>Tot.</th><th>Media/set</th></tr></thead><tbody>'
+        + ds.slice(0, 40).map(function(d){
+            var s = store.jolly[d];
+            return '<tr class="' + (d === jDate ? "cur" : "") + '" data-jd="' + d + '"><td>' + fmt(d) + '</td><td>' + jDone(s) + '</td>'
+              + J_COUNT.map(function(x){ return '<td>' + jSum(s, x.id) + '</td>'; }).join("")
+              + '<td><b>' + jTot(s) + '</b></td><td>' + nf(jPerSet(s), 1) + '</td></tr>';
+          }).join("")
+        + '</tbody></table></div><p class="foot-note">Tocca una riga per aprire quella seduta.</p>';
+    } else h += '<p class="hint">Nessuna seduta registrata. Avvia il circuito guidato o compila la tabella a mano.</p>';
+    h += '</div>';
+    $("#page-jolly").innerHTML = h;
+  }
+
+  function jRefresh(i){
+    var st = jCur.sets[i], el = $("#jRowTot" + i); if(el) el.textContent = jSetHas(st) ? jSetTot(st) : "—";
+    J_COUNT.forEach(function(s){ var c = $("#jColTot_" + s.id); if(c) c.textContent = jSum(jCur, s.id); });
+    var a = $("#jAllTot"); if(a) a.textContent = jTot(jCur);
+    var sm = $("#jSum"); if(sm) sm.innerHTML = jSumHTML();
+  }
+
+  $("#page-jolly").addEventListener("input", function(ev){
+    var t = ev.target;
+    if(t.dataset.jk){ jSetVal(+t.dataset.js, t.dataset.jk, digits(t)); jRefresh(+t.dataset.js); }
+    else if(t.id === "jNote"){ jCur.note = t.value; jQueue(); }
+  });
+  $("#page-jolly").addEventListener("change", function(ev){
+    if(ev.target.id === "jDate" && ev.target.value){ jCommit(); jLoad(ev.target.value); renderJolly(); }
+  });
+  $("#page-jolly").addEventListener("click", function(ev){
+    var t = ev.target;
+    if(t.closest("#jAdd")){ jCur.sets.push(jEmptySet()); renderJolly(); return; }
+    if(t.closest("#jDel")){
+      var last = jCur.sets[jCur.sets.length - 1];
+      if(jSetHas(last) && !confirm("L'ultimo set contiene ripetizioni. Eliminarlo?")) return;
+      jCur.sets.pop(); jCommit(); renderJolly(); return;
+    }
+    if(t.closest("#cxStart")){ cxOpen(); return; }
+    var r = t.closest("[data-jd]");
+    if(r){ jCommit(); jLoad(r.dataset.jd); renderJolly(); window.scrollTo(0, 0); }
+  });
+
+  /* ---------- circuito guidato ---------- */
+  var CX = { on:false, kind:"", set:1, planned:JOLLY.minSets, step:0, end:0, dur:0, paused:false, left:0, iv:null, beepAt:-1, lock:null };
+
+  function beep(f, d, v){
+    try {
+      var c = TM.ctx; if(!c) return;
+      var o = c.createOscillator(), g = c.createGain(), t0 = c.currentTime;
+      o.type = "sine"; o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(v || 0.3, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+      o.connect(g); g.connect(c.destination); o.start(t0); o.stop(t0 + d + 0.03);
+    } catch(e){}
+  }
+  function cxCue(){
+    var k = CX.kind;
+    try { if(navigator.vibrate) navigator.vibrate(k === "work" ? [300] : [150, 80, 150]); } catch(e){}
+    if(k === "work") beep(990, 0.45, 0.35);
+    else if(k === "rest" || k === "setrest"){ beep(520, 0.25, 0.3); setTimeout(function(){ beep(520, 0.25, 0.3); }, 320); }
+    else if(k === "end") tmAlert();
+  }
+  function cxWake(){
+    try { if(navigator.wakeLock && !CX.lock) navigator.wakeLock.request("screen").then(function(l){ CX.lock = l; l.addEventListener("release", function(){ CX.lock = null; }); }).catch(function(){}); } catch(e){}
+  }
+  function cxUnwake(){ try { if(CX.lock){ CX.lock.release(); CX.lock = null; } } catch(e){} }
+
+  function cxOpen(){
+    tmStop();
+    tmAudio();
+    if(jDate !== todayISO()){ jCommit(); jLoad(todayISO()); }
+    var done = jDone(jCur);
+    CX.on = true; CX.paused = false;
+    CX.set = done + 1;                                   // riparte dal primo set non registrato
+    CX.planned = Math.max(JOLLY.minSets, CX.set);
+    $("#cx").hidden = false; document.body.classList.add("lock");
+    cxPhase("prep", 0, Date.now());
+    clearInterval(CX.iv); CX.iv = setInterval(cxTick, 200);
+    cxWake();
+  }
+  function cxPhase(kind, step, at){
+    var S = JOLLY.steps;
+    CX.kind = kind; CX.step = step; CX.beepAt = -1;
+    CX.dur = kind === "prep" ? JOLLY.prep : kind === "work" ? S[step].work : kind === "rest" ? S[step].rest : kind === "setrest" ? JOLLY.setRest : 0;
+    CX.end = at + CX.dur * 1000;
+    if(CX.paused) CX.left = CX.dur * 1000;
+    cxRender();
+  }
+  function cxNext(at, quiet){
+    var S = JOLLY.steps, last = S.length - 1;
+    if(CX.kind === "prep") cxPhase("work", 0, at);
+    else if(CX.kind === "work"){
+      if(CX.step < last) cxPhase(S[CX.step].rest > 0 ? "rest" : "work", S[CX.step].rest > 0 ? CX.step : CX.step + 1, at);
+      else if(CX.set < CX.planned) cxPhase("setrest", 0, at);
+      else cxPhase("end", 0, at);
+    }
+    else if(CX.kind === "rest") cxPhase("work", CX.step + 1, at);
+    else if(CX.kind === "setrest"){ CX.set++; cxPhase("work", 0, at); }
+    if(!quiet) cxCue();
+  }
+  function cxLeft(){ return CX.paused ? CX.left : Math.max(0, CX.end - Date.now()); }
+  function cxView(){
+    var left = cxLeft(), sec = Math.ceil(left / 1000);
+    var t = $("#cxTime"); if(t) t.textContent = Math.floor(sec / 60) + ":" + pad(sec % 60);
+    var b = $("#cxBar"); if(b) b.style.transform = "scaleX(" + (CX.dur ? Math.min(1, left / (CX.dur * 1000)) : 0) + ")";
+    return sec;
+  }
+  function cxTick(){
+    if(!CX.on || CX.paused || CX.kind === "end") return;
+    var now = Date.now(), guard = 0;
+    while(CX.kind !== "end" && now >= CX.end && guard++ < 200) cxNext(CX.end, now - CX.end > 1500);
+    if(CX.kind === "end") return;
+    var sec = cxView();
+    if(sec >= 1 && sec <= 3 && CX.beepAt !== sec){ CX.beepAt = sec; beep(660, 0.12, 0.25); }
+  }
+  function cxPause(){
+    if(CX.kind === "end") return;
+    if(!CX.paused){ CX.paused = true; CX.left = Math.max(0, CX.end - Date.now()); }
+    else { CX.paused = false; CX.end = Date.now() + CX.left; }
+    $("#cx").classList.toggle("paused", CX.paused);
+    $("#cxPause").textContent = CX.paused ? "Riprendi" : "Pausa";
+    cxView();
+  }
+  function cxClose(ask){
+    if(ask && !confirm("Interrompere il circuito? Le ripetizioni già inserite restano salvate.")) return;
+    clearInterval(CX.iv); CX.iv = null; CX.on = false; CX.kind = ""; CX.paused = false;
+    $("#cx").hidden = true; $("#cx").className = "cx"; document.body.classList.remove("lock");
+    jCommit(); cxUnwake();
+    if(curPage === "jolly") renderJolly();
+  }
+  function cxClock(){ return '<div class="cx-time" id="cxTime">0:00</div><div class="cx-bar"><i id="cxBar"></i></div>'; }
+  function cxInputs(list, title){
+    var i = CX.set - 1, st = jCur.sets[i] || {}, prev = jPrevOf(jDate), ps = prev && prev.sets && prev.sets[i];
+    return '<div class="cx-in"><div class="cx-in-h">' + title + '</div><div class="cx-in-g' + (list.length === 1 ? ' one' : '') + '">'
+      + list.map(function(s){
+          var pv = jVal(ps, s.id);
+          return '<label><span>' + s.name + '</span><input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" data-cxk="' + s.id + '"'
+            + ' value="' + esc(jVal(st, s.id)) + '" placeholder="' + (pv ? esc(pv) : "0") + '">'
+            + '<small>' + (pv ? 'ultima volta ' + esc(pv) : '&nbsp;') + '</small></label>';
+        }).join("") + '</div></div>';
+  }
+  function cxSumTxt(){ var n = jDone(jCur); return "Totale: " + nf(jTot(jCur)) + " ripetizioni in " + n + (n === 1 ? " set" : " set") + (n ? " · media " + nf(jPerSet(jCur), 1) + " per set" : ""); }
+  function cxRender(){
+    var S = JOLLY.steps, k = CX.kind, st = S[CX.step], el = $("#cx");
+    el.className = "cx k-" + k + (CX.paused ? " paused" : "");
+    $("#cxSet").textContent = "Set " + CX.set + " di " + CX.planned;
+    $("#cxDots").innerHTML = S.map(function(s, i){
+      var c = (k === "setrest" || k === "end") ? "ok" : (i < CX.step || (i === CX.step && k === "rest")) ? "ok" : (i === CX.step && k === "work") ? "on" : "";
+      return '<i class="' + c + '"></i>';
+    }).join("");
+    var h = "";
+    if(k === "prep"){
+      h = '<div class="cx-ph">Preparati</div><div class="cx-name">' + S[0].name + '</div><div class="cx-fig pri">' + (FIGS[S[0].fig] || "") + '</div>'
+        + cxClock() + '<div class="cx-next">Set ' + CX.set + ': si parte con ' + S[0].work + '" di ' + S[0].name.toLowerCase() + '</div>';
+    } else if(k === "work"){
+      var nx = CX.step < S.length - 1
+        ? (st.rest ? 'Poi ' + st.rest + '" di riposo, quindi ' + S[CX.step + 1].name.toLowerCase() : 'Poi ' + S[CX.step + 1].name.toLowerCase())
+        : (CX.set < CX.planned ? 'Poi ' + Math.round(JOLLY.setRest / 60) + ' minuti di recupero' : 'Ultimo esercizio del circuito');
+      h = '<div class="cx-ph">' + (st.count ? 'Lavoro · conta le ripetizioni' : 'Lavoro · tieni la posizione') + '</div><div class="cx-name">' + st.name + '</div>'
+        + '<div class="cx-fig pri">' + (FIGS[st.fig] || "") + '</div>' + cxClock() + '<div class="cx-next">' + nx + '</div>';
+    } else if(k === "rest"){
+      h = '<div class="cx-ph">Riposo</div><div class="cx-name sm">Prossimo: ' + S[CX.step + 1].name + '</div>' + cxClock()
+        + (st.count ? cxInputs([st], "Quante ripetizioni di " + st.name.toLowerCase() + "?") : '<div class="cx-next">' + st.name + ' completato: niente da registrare.</div>');
+    } else if(k === "setrest"){
+      h = '<div class="cx-ph">Recupero tra i set</div><div class="cx-name sm">Set ' + CX.set + ' completato · poi set ' + (CX.set + 1) + '</div>' + cxClock()
+        + cxInputs(J_COUNT, "Ripetizioni del set " + CX.set) + '<div class="cx-sum" id="cxSum">' + cxSumTxt() + '</div>';
+    } else if(k === "end"){
+      h = '<div class="cx-ph">Circuito completato</div><div class="cx-name">' + CX.set + ' set fatti</div>'
+        + cxInputs(J_COUNT, "Ripetizioni del set " + CX.set)
+        + '<div class="cx-sum" id="cxSum">' + cxSumTxt() + '</div>'
+        + '<div class="cx-endb"><button type="button" class="cx-b solid" data-cx="finish">Termina e salva</button>'
+        + '<button type="button" class="cx-b" data-cx="more">Un altro set (dopo ' + Math.round(JOLLY.setRest / 60) + '\' di recupero)</button></div>';
+    }
+    $("#cxBody").innerHTML = h;
+    $("#cxCtrl").hidden = k === "end";
+    $("#cxPause").textContent = CX.paused ? "Riprendi" : "Pausa";
+    cxView();
+  }
+
+  $("#cx").addEventListener("click", function(ev){
+    var b = ev.target.closest("[data-cx]"); if(!b) return;
+    var a = b.dataset.cx;
+    if(a === "close") cxClose(true);
+    else if(a === "pause") cxPause();
+    else if(a === "skip"){ if(CX.kind !== "end") cxNext(Date.now()); }
+    else if(a === "finish") cxClose(false);
+    else if(a === "more"){ CX.planned++; cxPhase("setrest", 0, Date.now()); cxCue(); }
+  });
+  $("#cx").addEventListener("input", function(ev){
+    var t = ev.target; if(!t.dataset.cxk) return;
+    jSetVal(CX.set - 1, t.dataset.cxk, digits(t));
+    var s = $("#cxSum"); if(s) s.textContent = cxSumTxt();
+  });
+  document.addEventListener("visibilitychange", function(){
+    if(document.hidden){ if(jTimer) jCommit(); }
+    else if(CX.on){ cxTick(); cxWake(); }
+  });
+  window.addEventListener("pagehide", function(){ if(jTimer) jCommit(); });
+
+  /* ---------- export CSV ---------- */
+  $("#expJollyCsv").addEventListener("click", function(){
+    var ds = jDates(); if(!ds.length){ dMsg("Nessuna seduta Day Jolly da esportare", true); return; }
+    var rows = [["Data", "Set"].concat(J_COUNT.map(function(s){ return s.name; })).concat(["Totale set", "Note"])];
+    ds.forEach(function(d){
+      var s = store.jolly[d], first = true;
+      (s.sets || []).forEach(function(st, i){
+        if(!jSetHas(st)) return;
+        rows.push([d, i + 1].concat(J_COUNT.map(function(x){ return jVal(st, x.id); })).concat([jSetTot(st), first ? (s.note || "").replace(/[\r\n]+/g, " ") : ""]));
+        first = false;
+      });
+    });
+    if(download("day-jolly-" + todayISO() + ".csv", csvJoin(rows), "text/csv;charset=utf-8")) dMsg("CSV Day Jolly esportato");
+  });
+
+
+  /* ============================================================
+     HOME — frase del giorno, avanzamento settimanale, scelta allenamento
+     ============================================================ */
+  function qGcd(a, b){ return b ? qGcd(b, a % b) : a; }
+  function quoteOfDay(){
+    var n = QUOTES.length; if(!n) return { t:"" };
+    var t = today(), day = Math.floor(Date.UTC(t.getFullYear(), t.getMonth(), t.getDate()) / 86400000);
+    var stride = [37, 41, 43, 47, 53, 59].filter(function(s){ return qGcd(s, n) === 1; })[0] || 1;   // passo coprimo: giro completo senza ripetizioni
+    return QUOTES[((day * stride) % n + n) % n];
+  }
+  function weekPulse(){
+    var t = today(), ws = iso(addDays(t, -((t.getDay() + 6) % 7))), a = agg(ws, iso(t));
+    var n = a.gym + a.home + a.run, tg = CONFIG.target, st = streak(), miss = tg - n;
+    var msg = n >= tg ? "obiettivo raggiunto" : n === 0 ? "settimana tutta da giocare" : (miss === 1 ? "ne manca 1 per l'obiettivo" : "ne mancano " + miss + " per l'obiettivo");
+    return '<div class="wkp' + (n >= tg ? ' ok' : '') + '"><div class="wkp-h"><b>' + n + '/' + tg + '</b> allenamenti questa settimana · ' + msg
+      + (st >= 2 ? ' · <b>' + st + ' settimane di fila</b>' : '') + '</div>'
+      + '<div class="wkp-b"><i style="width:' + Math.min(100, n / tg * 100).toFixed(0) + '%"></i></div></div>';
+  }
+  function pickCard(p){
+    return '<a class="pick-o' + (p.rec ? ' rec' : '') + (p.cls ? ' ' + p.cls : '') + '" href="' + p.href + '"'
+      + (p.goday ? ' data-goday="' + p.goday + '" data-date="' + p.date + '"' : '') + '>'
+      + '<span class="pick-ic">' + p.ic + '</span>'
+      + '<span class="pick-t"><span class="pick-h"><b>' + p.title + '</b>'
+      +   (p.rec ? '<span class="pick-b">Consigliato</span>' : '') + (p.done ? '<span class="pick-b ok">Fatto oggi</span>' : '') + '</span>'
+      +   '<small>' + esc(p.sub) + '</small><small class="pick-l">' + p.meta + '</small></span>'
+      + '<span class="pick-ch" aria-hidden="true">›</span></a>';
+  }
+  function pickOptions(next, tIso){
+    var o = "";
+    PROGRAM.forEach(function(d, i){
+      var ld = lastDate(d.id);
+      o += pickCard({ href:"#" + d.id, goday:d.id, date:tIso, ic:"D" + (i + 1), title:d.tab, sub:d.focus,
+                      meta: ld ? "ultima volta " + daysAgo(ld) : "mai eseguito", rec: d.id === next.id, done: ld === tIso });
+    });
+    var jl = jLast();
+    o += pickCard({ href:"#jolly", ic:ICO.jolly, cls:"j", title:JOLLY.tab, sub:JOLLY.focus + " · circa " + Math.round(jPlanSec(JOLLY.minSets) / 60) + " minuti",
+                    meta: jl ? "ultima volta " + daysAgo(jl) : "mai eseguito", done: jl === tIso });
+    var lr = runsSorted()[0];
+    o += pickCard({ href:"#run", ic:ICO.run, cls:"r", title:"Corsa",
+                    sub: lr ? "ultima: " + nf(lr.km, 1) + " km a " + paceOf(lr.sec, lr.km) : "durata, km e battito medio",
+                    meta: lr ? "ultima volta " + daysAgo(lr.date) : "nessuna corsa registrata", done: !!lr && lr.date === tIso });
+    return o;
+  }
 
   /* ---------- boot ---------- */
   load();
